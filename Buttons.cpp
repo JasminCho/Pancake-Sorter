@@ -8,6 +8,11 @@ void PancakeSorter::cb_start(Address, Address window)
 	reference_to<PancakeSorter>(window).startGame();
 }
 
+void PancakeSorter::cb_one(Address, Address window)
+{
+	reference_to<PancakeSorter>(window).setLevel(1);
+}
+
 void PancakeSorter::cb_two(Address, Address window)
 {
 	reference_to<PancakeSorter>(window).setLevel(2);
@@ -58,15 +63,12 @@ void PancakeSorter::cb_eleven(Address, Address window)
 	reference_to<PancakeSorter>(window).setLevel(11);
 }
 
-void PancakeSorter::cb_twelve(Address, Address window)
-{
-	reference_to<PancakeSorter>(window).setLevel(12);
-}
-
 void PancakeSorter::setLevel(int lvl)
 {
-	cout << "Number of Pancakes this level: " << lvl << endl;
-	string levelString = "Level " + to_string(lvl-1);
+	level = lvl;
+	cout << "Number of Pancakes this level: " << getNumPancakes() << endl;
+	string levelString = "Level " + to_string(lvl);
 	levelText.set_label(levelString);
+
 	redraw();
 }
