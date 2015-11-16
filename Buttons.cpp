@@ -8,11 +8,6 @@ void PancakeSorter::cb_start(Address, Address window)
 	reference_to<PancakeSorter>(window).startGame();
 }
 
-void PancakeSorter::cb_one(Address, Address window)
-{
-	reference_to<PancakeSorter>(window).setLevel(1);
-}
-
 void PancakeSorter::cb_two(Address, Address window)
 {
 	reference_to<PancakeSorter>(window).setLevel(2);
@@ -61,6 +56,11 @@ void PancakeSorter::cb_ten(Address, Address window)
 void PancakeSorter::cb_eleven(Address, Address window)
 {
 	reference_to<PancakeSorter>(window).setLevel(11);
+}
+
+void PancakeSorter::cb_twelve(Address, Address window)
+{
+	reference_to<PancakeSorter>(window).setLevel(12);
 }
 
 void PancakeSorter::setLevel(int lvl)
