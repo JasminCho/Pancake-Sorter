@@ -24,7 +24,14 @@ void PancakeSorter::setPancakes()
 
 	for(int i = 0; i < getNumPancakes(); i++)
 	{
-		addPancake(Y_START - (Y_DISTANCE*i), WIDTH_START + (WIDTH_SCALE*i));
+//I changed Y_DISTANCE*i
+		addPancake(170, WIDTH_START + (WIDTH_SCALE*i));
+	}
+//Shuffling the pancakes
+        random_shuffle(pancakes.begin(),pancakes.end());
+	for(int i=0; i<getNumPancakes(); ++i)
+	{
+		pancakes[i]->move(0,(i*40));
 	}
 }
 
