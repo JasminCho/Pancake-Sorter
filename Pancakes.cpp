@@ -45,5 +45,10 @@ void PancakeSorter::drawPancakes()
 
 int PancakeSorter::getNumPancakes()
 {
+<<<<<<< HEAD
 	return level+1;
 }
+=======
+	return level;
+}
+>>>>>>> origin/master
