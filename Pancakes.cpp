@@ -46,9 +46,9 @@ void PancakeSorter::drawPancakes()
 int PancakeSorter::getNumPancakes()
 {
 
-	return level+1;
-}
-
 	return level;
 }
+
+	
+
 
