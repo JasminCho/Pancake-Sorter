@@ -2,6 +2,15 @@
 #include "PancakeSorter.h"
 
 //Call backs setting the level for the pancake numbers
+void PancakeSorter::cb_instruct(Address, Address window)
+{
+	reference_to<PancakeSorter>(window).startInstruct();
+}
+
+void PancakeSorter::cb_levelScreen(Address, Address window)
+{
+	reference_to<PancakeSorter>(window).showLevel();
+}
 
 void PancakeSorter::cb_start(Address, Address window)
 {
