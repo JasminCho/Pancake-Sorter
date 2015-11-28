@@ -7,7 +7,7 @@
 
 int main()
 {
-	PancakeSorter window(Point(300,100),1000,800,"Flip Flaps Game");
+	PancakeSorter window(Point(150,0),1000,700,"Flip Flaps Game");
 
 	window.wait_for_button();
 }

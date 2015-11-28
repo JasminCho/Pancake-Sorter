@@ -7,6 +7,35 @@ PancakeSorter::PancakeSorter(Point xy, int w, int h, const string& title)
 	{
 		startScreen();
 	}
+//hide flip buttons function
+void PancakeSorter::hide_flip_buttons()
+{
+	flip2.hide();
+        flip3.hide();
+        flip4.hide();
+        flip5.hide();
+        flip6.hide();
+        flip7.hide();
+        flip8.hide();
+        flip9.hide();
+        flip10.hide();
+        flip11.hide();
+        flip12.hide();	
+}
+void PancakeSorter::show_flip_buttons()
+{
+	flip2.show();
+        flip3.show();
+        flip4.show();
+        flip5.show();
+        flip6.show();
+        flip7.show();
+        flip8.show();
+        flip9.show();
+        flip10.show();
+        flip11.show();
+        flip12.show();
+}
 
 void PancakeSorter::startScreen()
 {
@@ -61,6 +90,21 @@ void PancakeSorter::showLevel()
 		attach(eleven);
 		attach(twelve);
 		attach(levelText);
+		
+		attach(flip2);
+                attach(flip3);
+                attach(flip4);
+                attach(flip5);
+                attach(flip6);
+                attach(flip7);
+                attach(flip8);
+                attach(flip9);
+                attach(flip10);
+                attach(flip11);
+                attach(flip12);
+
+		hide_flip_buttons();
+
 		redraw();
 }
 
@@ -92,7 +136,7 @@ void PancakeSorter::startGame()
 	setPancakes();
 	// attach pancakes
 	drawPancakes();
-
+	show_flip_buttons();
 	// attach current Level player chose
 
 	redraw();

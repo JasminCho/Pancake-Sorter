@@ -81,3 +81,48 @@ void PancakeSorter::setLevel(int lvl)
 
 	redraw();
 }
+//Pancake Flipping cb
+void PancakeSorter::cb_flip2(Address,Address window)
+{
+    cout<<"flip 2\n";
+}
+void PancakeSorter::cb_flip3(Address,Address window)
+{
+    cout<<"flip 3\n";
+}
+void PancakeSorter::cb_flip4(Address,Address window)
+{
+    cout<<"flip 4\n";
+}
+void PancakeSorter::cb_flip5(Address,Address window)
+{
+    cout<<"flip 5\n";
+}
+void PancakeSorter::cb_flip6(Address,Address window)
+{
+    cout<<"flip 6\n";
+}
+void PancakeSorter::cb_flip7(Address,Address window)
+{
+    cout<<"flip 7\n";
+}
+void PancakeSorter::cb_flip8(Address,Address window)
+{
+    cout<<"flip 8\n";
+}
+void PancakeSorter::cb_flip9(Address,Address window)
+{
+    cout<<"flip 9\n";
+}
+void PancakeSorter::cb_flip10(Address,Address window)
+{
+    cout<<"flip 10\n";
+}
+void PancakeSorter::cb_flip11(Address,Address window)
+{
+    cout<<"flip 11\n";
+}
+void PancakeSorter::cb_flip12(Address,Address window)
+{
+    cout<<"flip 12\n";
+}
