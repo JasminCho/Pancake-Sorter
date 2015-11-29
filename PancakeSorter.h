@@ -44,6 +44,8 @@ struct PancakeSorter: Simple_window
 
 	// Instruction Screen
 	void back(); //back to splash screen from instruction screen
+	void detachInstruct();//detaches instruction 
+	void startFromInstruct();//from instruction to level screen
 
 	// Level Chooser Screen
 	void attachLevelButtons(); //attaches the buttons for level screen
@@ -98,6 +100,7 @@ struct PancakeSorter: Simple_window
 
 	// Callbacks for Instruction Screen
 	static void cb_back(Address, Address window);
+	static void cb_instructToLevel(Address, Address window);
 
 	// callbacks for level screen
 	static void cb_start(Address, Address window);
@@ -145,6 +148,16 @@ private:
 	Rectangle levelScreen{Point{530,715},80,30};
 	Text levelScreenLabel{Point{532,732},"   START"};
 	Button levelScreenButton{Point{530,715},80,30,"   START",cb_levelScreen};
+
+	//Instruction Screen
+	Text instTitle{Point{400,65}, "Instructions"};
+	Text lineOne{Point{25,160}, "The goal of this game is to arrange a stack of different size pancakes"};
+	Text lineTwo{Point{25,205}, "from smallest on top to largest on bottom by repeatedly flipping"};
+	Text lineThree{Point{25,250}, "over a top partial stack of some number of pancakes, you can insert between any two pancakes."};
+	Text lineFour{Point{25,295}, "There will be a timer to show how much time is left for you to complete the game."};
+	Text lineFive{Point{25,340}, "The game is over when pancakes are sorted and top scores will be recorded."};
+	Text lineSix{Point{25,385}, "Your score is 0 if you do too many flips."};
+	Button instructToLevel{Point{450,700},90,30,"START",cb_instructToLevel};
 
 	// Level Screen Objects
 	// hiscores

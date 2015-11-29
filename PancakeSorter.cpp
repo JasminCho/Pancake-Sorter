@@ -164,8 +164,48 @@ void PancakeSorter::detachSplash()
 void PancakeSorter::startInstruct()
 {
 	detachSplash();
-	attach(backButton);
+	instTitle.set_font(Graph_lib::Font::screen_bold);
+	instTitle.set_font_size(30);
+	lineOne.set_font_size(20);
+	lineTwo.set_font_size(20);
+	lineThree.set_font_size(20);
+	lineFour.set_font_size(20);
+	lineFive.set_font_size(20);
+	lineSix.set_font_size(20);
+	attach(instTitle);
+	attach(lineOne);
+	attach(lineTwo);
+	attach(lineThree);
+	attach(lineFour);
+	attach(lineFive);
+	attach(lineSix);
+	attach(instructToLevel);
 	redraw();
+	
+}
+
+void PancakeSorter::detachInstruct()
+{
+	
+	detach(instTitle);
+	detach(lineOne);
+	detach(lineTwo);
+	detach(lineThree);
+	detach(lineFour);
+	detach(lineFive);
+	detach(lineSix);
+
+
+}
+
+void PancakeSorter::startFromInstruct()
+{
+	detachInstruct();
+	attachLevelButtons();
+	attach(playerInitials);
+	detach(instructToLevel);
+	redraw();
+	
 }
 
 void PancakeSorter::back()

@@ -6,7 +6,10 @@ void PancakeSorter::cb_instruct(Address, Address window)
 {
 	reference_to<PancakeSorter>(window).startInstruct();
 }
-
+void PancakeSorter::cb_instructToLevel(Address, Address window)
+{
+	reference_to<PancakeSorter>(window).startFromInstruct();
+}
 void PancakeSorter::cb_levelScreen(Address, Address window)
 {
 	reference_to<PancakeSorter>(window).showLevel();
