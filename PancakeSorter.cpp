@@ -228,8 +228,6 @@ void PancakeSorter::startGame()
 	// reset moves to 0
 	setMoves(0);
 
-	// calculate score
-	calcScore();
 	// show current moves
 	attach(movesText);
 
@@ -247,6 +245,8 @@ void PancakeSorter::startGame()
 	attach(exitButton);
 	attachFlipButtons();
 	outputInitials();
+	// calculate score
+	calcScore();
 
 	redraw();
 }

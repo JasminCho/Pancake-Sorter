@@ -1,5 +1,1 @@
-ctf 240
-test 240
-JYC 10
-CTF 8
-DYC 2
+JYC 10000
