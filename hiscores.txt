@@ -1,0 +1,3 @@
+JYC 10
+CTF 8
+DYC 2

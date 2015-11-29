@@ -12,5 +12,8 @@
 //	which is the minimum number of flips to put the pancakes in order.  This
 //	minimum is to be used in the scoring function, and to determine when to
 //	stop the game for too many flips.
+#include "std_lib_facilities_4.h"
 
 vector<int> *find_solution(const vector<int>& pancakes);
+vector<int> *m_find_solution(const vector<int>& pancakes);
+int num_moves(const vector<int>* soluition);

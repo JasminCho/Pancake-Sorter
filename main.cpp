@@ -8,7 +8,7 @@
 int main()
 {
 	srand(time(NULL));
-	
+
 	PancakeSorter window(Point(300,100),1000,800,"Flip Flaps Game");
 
 	window.wait_for_button();

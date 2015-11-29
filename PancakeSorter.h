@@ -8,11 +8,13 @@
 #include "Graph.h"
 #include "GUI.h"
 #include "std_lib_facilities_4.h"
+#include "hiscore.h"
 
 using namespace Graph_lib;
 
 struct PancakeSorter: Simple_window
 {
+	// constants for pancakes and flip buttons
 	const int CENTER_X = 500;
 	const int PANCAKE_HEIGHT = 20;
 	
@@ -26,55 +28,59 @@ struct PancakeSorter: Simple_window
 	const int FLIP_BUTTON_X = CENTER_X - (WIDTH_MAX / 2);
 	const int FLIP_BUTTON_Y = Y_START - (PANCAKE_HEIGHT);
 
-	PancakeSorter(Point(xy),int w,int h,const string& title);	
-	int level = 0;
+	// window
+	PancakeSorter(Point(xy),int w,int h,const string& title);
 	
-	void startScreen(); //splash screen
+	Vector<Ellipse*> pancakes; //ellipses vector
+	Vector<int> pancakePos; //pancake positions vector
+	Vector<HiScore> scores; //vector of 5 highest scores
+	int level = 0;
+	string player = "";	
+
+	
+	// Splash Screen
+	void startScreen(); //opens level screen
+	void startInstruct(); //opens instruction screen
 	void detachSplash(); //detatch splash w/o redraw
-	void startInstruct(); 
-	void startGame();
-	void exitGame();
-	void showLevel();
-	void setLevel(int numlvl);
-	void attachLevelButtons();
-	void hideLevel();
-	void addPancake(int y, int w); //creates pancakes from 2-12
-	void detachPancakes();
-	void shufflePancakes();
-	void addPancakeEllipses();
-	void attachPancakes(); 
-	void flipPancake(int pos);
-	int getNumPancakes();
-	void attachFlipButtons();
-	void detachFlipButtons();
-	void moveFlipButton(Button &btn, int i);
-	void movePancakes(int ellipseA, int ellipseB);
-	void initializePancakePosition();
-	void debugPancakesPosition();
-	void clearPancakes();
 
-	// ellipses
-	Vector<Ellipse*> pancakes;
-	// pancake positions
-	Vector<int> pancakePos;
+	// Instruction Screen
+	void back(); //back to splash screen from instruction screen
 
-	// callbacks for game screen
-	static void cb_exitGame(Address, Address window);
-	static void cb_flip1(Address, Address window);
-	static void cb_flip2(Address, Address window);
-	static void cb_flip3(Address, Address window);
-	static void cb_flip4(Address, Address window);
-	static void cb_flip5(Address, Address window);
-	static void cb_flip6(Address, Address window);
-	static void cb_flip7(Address, Address window);
-	static void cb_flip8(Address, Address window);
-	static void cb_flip9(Address, Address window);
-	static void cb_flip10(Address, Address window);
-	static void cb_flip11(Address, Address window);
+	// Level Chooser Screen
+	void attachLevelButtons(); //attaches the buttons for level screen
+	void startGame(); //starts actual game
+	void showLevel(); //displays level on level screen
+	void setLevel(int numlvl); //sets the chosen level
+	void hideLevel(); //detaches all buttons on level screen
+	void outputInitials(); //display player initials
 
-	// callbacks for start screen
+	// Pancake functions
+	int getNumPancakes(); //gets number of pancakes for certain level chosen
+	void addPancake(int y, int w); //creates pancakes 2-12 and adds to vector of ellipses
+	void attachPancakes(); //attaches pancake ellipses
+	void detachPancakes(); //detaches pancake ellipses
+	void shufflePancakes(); //randomly shuffles pancakes
+	void addPancakeEllipses(); //draws the number of pancakes for chosen level
+	void flipPancake(int pos); //flips the pancakes from chosen position
+	void attachFlipButtons(); //attaches the buttons to flip pancakes
+	void detachFlipButtons(); //detaches buttons to flip pancakes
+	void moveFlipButton(Button &btn, int i); //moves the buttons to positions
+	void movePancakes(int ellipseA, int ellipseB); //moves ellipses in flipPancake(int pos)
+	void initializePancakePosition(); //adds positions from 1-total num pancakes
+	void clearPancakes(); //clears pancakes in ellipse vector
+
+	// Game Screen
+	void exitGame(); //to exit game screen
+	void makeFlipInvisible(); //make buttons invisible
+	void calcScore(int numFlips, int timeLeft); //calculates player's final score
+	void loadScores();
+
+	// Callbacks for Start Screen
 	static void cb_instruct(Address, Address window);
 	static void cb_levelScreen(Address, Address window);
+
+	// Callbacks for Instruction Screen
+	static void cb_back(Address, Address window);
 
 	// callbacks for level screen
 	static void cb_start(Address, Address window);
@@ -89,6 +95,20 @@ struct PancakeSorter: Simple_window
 	static void cb_ten(Address, Address window);
 	static void cb_eleven(Address, Address window);
 	static void cb_twelve(Address, Address window);
+
+	// Callbacks for Game Screen
+	static void cb_exitGame(Address, Address window);
+	static void cb_flip1(Address, Address window);
+	static void cb_flip2(Address, Address window);
+	static void cb_flip3(Address, Address window);
+	static void cb_flip4(Address, Address window);
+	static void cb_flip5(Address, Address window);
+	static void cb_flip6(Address, Address window);
+	static void cb_flip7(Address, Address window);
+	static void cb_flip8(Address, Address window);
+	static void cb_flip9(Address, Address window);
+	static void cb_flip10(Address, Address window);
+	static void cb_flip11(Address, Address window);
 
 private:
 
@@ -110,6 +130,8 @@ private:
 	Button levelScreenButton{Point{530,715},80,30,"   START",cb_levelScreen};
 
 	//Level Screen
+	In_box playerInitials{Point{500,250},100,50,"Input Player Initials: "};
+	Text playerText{Point{500,250},player};
 	Text levelText{Point{500,350},"Choose Level"};
 	Button start{Point{450,700},90,30,"START",cb_start};
 	Button two{Point{350,400},90,30,"Level 2",cb_two};
@@ -137,6 +159,6 @@ private:
 	Button p12{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(10 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 1", cb_flip1};
 
 	Button exitButton{Point{100,100},90,30,"Quit",cb_exitGame};
-
+	Button backButton{Point{100,100},90,30,"Back",cb_back};
 };
 #endif

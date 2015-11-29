@@ -77,6 +77,11 @@ void PancakeSorter::cb_exitGame(Address, Address window)
 	reference_to<PancakeSorter>(window).exitGame();
 }
 
+void PancakeSorter::cb_back(Address, Address window)
+{
+	reference_to<PancakeSorter>(window).back();
+}
+
 void PancakeSorter::cb_flip11(Address, Address window)
 {
 	PancakeSorter &win = reference_to<PancakeSorter>(window);

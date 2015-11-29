@@ -10,6 +10,7 @@ PancakeSorter::PancakeSorter(Point xy, int w, int h, const string& title)
 
 void PancakeSorter::startScreen()
 {
+	loadScores();
 	//background
 	bgcolor.set_fill_color(fl_rgb_color(16,179,122));
 	attach(bgcolor);
@@ -49,6 +50,7 @@ void PancakeSorter::startScreen()
 void PancakeSorter::showLevel()
 {
 	detachSplash();
+	attach(playerInitials);
 	attachLevelButtons();
 	redraw();
 }
@@ -99,6 +101,22 @@ void PancakeSorter::attachFlipButtons()
 	if(getNumPancakes() >= 10) { attach(p10); }
 	if(getNumPancakes() >= 11) { attach(p11); }
 	if(getNumPancakes() >= 12) { attach(p12); }
+	makeFlipInvisible();
+}
+
+void PancakeSorter::makeFlipInvisible()
+{
+	p2.hide_border();
+	p3.hide_border();
+	p4.hide_border();
+	p5.hide_border();
+	p6.hide_border();
+	p7.hide_border();
+	p8.hide_border();
+	p9.hide_border();
+	p10.hide_border();
+	p11.hide_border();
+	p12.hide_border();
 }
 
 void PancakeSorter::detachFlipButtons()
@@ -138,6 +156,15 @@ void PancakeSorter::detachSplash()
 void PancakeSorter::startInstruct()
 {
 	detachSplash();
+	attach(backButton);
+	redraw();
+}
+
+void PancakeSorter::back()
+{
+	attachLevelButtons();
+	attach(playerText);
+	detach(backButton);
 	redraw();
 }
 
@@ -160,6 +187,9 @@ void PancakeSorter::startGame()
 
 	detach(levelText);
 
+	attach(playerText);
+	playerText.set_label(playerInitials.get_string());
+
 	hideLevel();
 	//add pancakes
 	addPancakeEllipses();
@@ -171,7 +201,8 @@ void PancakeSorter::startGame()
 	attach(exitButton);
 	hideLevel();
 	attachFlipButtons();
-
+	outputInitials();
+	detach(playerInitials);
 	redraw();
 }
 
@@ -179,9 +210,12 @@ void PancakeSorter::exitGame()
 {
 	clearPancakes();
 	detach(exitButton);
+	detach(playerText);
 	pancakes.clear();
 	pancakePos.clear();
 	attachLevelButtons();
 	detachFlipButtons();
+	attach(playerInitials);
+	string levelString = "Choose Level";
 	redraw();
 }

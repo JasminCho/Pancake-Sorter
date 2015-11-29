@@ -68,8 +68,6 @@ void PancakeSorter::flipPancake(int clickedPos)
 
 	cout << "Flipping from position: " << clickedPos << endl;
 
-	debugPancakesPosition();
-
 	int topIndex = getNumPancakes() - 1;
 	int botIndex = getNumPancakes() - clickedPos;
 	int numFlips = clickedPos / 2;
@@ -82,23 +80,6 @@ void PancakeSorter::flipPancake(int clickedPos)
 	}
 
 	redraw();
-}
-
-void PancakeSorter::debugPancakesPosition()
-{
-	cout << "Pancake ellipse vector size: " << pancakes.size() << endl;
-
-	for(uint i = 0; i < pancakePos.size(); i++)
-	{
-		cout << pancakePos[i];
-
-		if(i < pancakes.size() - 1)
-		{
-			cout << ", ";
-		}
-	}
-
-	cout << endl;
 }
 
 void PancakeSorter::addPancakeEllipses()
