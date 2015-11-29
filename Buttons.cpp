@@ -72,12 +72,73 @@ void PancakeSorter::cb_twelve(Address, Address window)
 	reference_to<PancakeSorter>(window).setLevel(12);
 }
 
-void PancakeSorter::setLevel(int lvl)
+void PancakeSorter::cb_exitGame(Address, Address window)
 {
-	level = lvl;
-	cout << "Number of Pancakes this level: " << getNumPancakes() << endl;
-	string levelString = "Level " + to_string(lvl);
-	levelText.set_label(levelString);
+	reference_to<PancakeSorter>(window).exitGame();
+}
 
-	redraw();
+void PancakeSorter::cb_flip11(Address, Address window)
+{
+	PancakeSorter &win = reference_to<PancakeSorter>(window);
+	win.flipPancake(win.getNumPancakes());
+}
+
+void PancakeSorter::cb_flip10(Address, Address window)
+{
+	PancakeSorter &win = reference_to<PancakeSorter>(window);
+	win.flipPancake(win.getNumPancakes() - 1);
+}
+
+void PancakeSorter::cb_flip9(Address, Address window)
+{
+	PancakeSorter &win = reference_to<PancakeSorter>(window);
+	win.flipPancake(win.getNumPancakes() - 2);
+}
+
+void PancakeSorter::cb_flip8(Address, Address window)
+{
+	PancakeSorter &win = reference_to<PancakeSorter>(window);
+	win.flipPancake(win.getNumPancakes() - 3);
+}
+
+void PancakeSorter::cb_flip7(Address, Address window)
+{
+	PancakeSorter &win = reference_to<PancakeSorter>(window);
+	win.flipPancake(win.getNumPancakes() - 4);
+}
+
+void PancakeSorter::cb_flip6(Address, Address window)
+{
+	PancakeSorter &win = reference_to<PancakeSorter>(window);
+	win.flipPancake(win.getNumPancakes() - 5);
+}
+
+void PancakeSorter::cb_flip5(Address, Address window)
+{
+	PancakeSorter &win = reference_to<PancakeSorter>(window);
+	win.flipPancake(win.getNumPancakes() - 6);
+}
+
+void PancakeSorter::cb_flip4(Address, Address window)
+{
+	PancakeSorter &win = reference_to<PancakeSorter>(window);
+	win.flipPancake(win.getNumPancakes() - 7);
+}
+
+void PancakeSorter::cb_flip3(Address, Address window)
+{
+	PancakeSorter &win = reference_to<PancakeSorter>(window);
+	win.flipPancake(win.getNumPancakes() - 8);
+}
+
+void PancakeSorter::cb_flip2(Address, Address window)
+{
+	PancakeSorter &win = reference_to<PancakeSorter>(window);
+	win.flipPancake(win.getNumPancakes() - 9);
+}
+
+void PancakeSorter::cb_flip1(Address, Address window)
+{
+	PancakeSorter &win = reference_to<PancakeSorter>(window);
+	win.flipPancake(win.getNumPancakes() - 10);
 }

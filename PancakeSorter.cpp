@@ -13,9 +13,6 @@ void PancakeSorter::startScreen()
 	//background
 	bgcolor.set_fill_color(fl_rgb_color(16,179,122));
 	attach(bgcolor);
-	attach(mainPancakePic);
-	attach(sidePancakePic1);
-	attach(sidePancakePic2);
 	
 	//Texts
 	gameTitle.set_font(Graph_lib::Font::screen_bold);
@@ -31,75 +28,96 @@ void PancakeSorter::startScreen()
 	attach(jg);
 	
 	//buttons
+	instruct.set_fill_color(Color::white);
+	instruct.set_color(Color::invisible);
 	attach(instruct);
 	instructLabel.set_font(Graph_lib::Font::screen_bold);
 	attach(instructLabel);
 	attach(instructButton);
+	levelScreen.set_fill_color(Color::white);
+	levelScreen.set_color(Color::invisible);
 	attach(levelScreen);
 	levelScreenLabel.set_font(Graph_lib::Font::screen_bold);
 	attach(levelScreenLabel);
 	attach(levelScreenButton);
-	
-	
-	
 
+	attach(mainPancakePic);
+	attach(sidePancakePic1);
+	attach(sidePancakePic2);
 }
 
 void PancakeSorter::showLevel()
 {
-		detachSplash();
-		attach(start);
-		attach(two);
-		attach(three);
-		attach(four);
-		attach(five);
-		attach(six);
-		attach(seven);
-		attach(eight);
-		attach(nine);
-		attach(ten);
-		attach(eleven);
-		attach(twelve);
-		attach(levelText);
-		redraw();
-}
-
-void PancakeSorter::hideButtons()
-{
-	start.hide();
-	
-	two.hide();
-	three.hide();
-	four.hide();
-	five.hide();
-	six.hide();
-	seven.hide();
-	eight.hide();
-	nine.hide();
-	ten.hide();
-	eleven.hide();
-	twelve.hide();
-
-
-}
-
-void PancakeSorter::startGame()
-{
-	detach(levelText);
-	
-	hideButtons();
-	//add pancakes
-	setPancakes();
-	// attach pancakes
-	drawPancakes();
-
-	// attach current Level player chose
-
+	detachSplash();
+	attachLevelButtons();
 	redraw();
 }
 
-void PancakeSorter::detachSplash(){
-	detach(bgcolor);
+void PancakeSorter::attachLevelButtons()
+{
+	attach(start);
+	attach(two);
+	attach(three);
+	attach(four);
+	attach(five);
+	attach(six);
+	attach(seven);
+	attach(eight);
+	attach(nine);
+	attach(ten);
+	attach(eleven);
+	attach(twelve);
+	attach(levelText);
+}
+
+void PancakeSorter::hideLevel()
+{
+	detach(start);
+	detach(two);
+	detach(three);
+	detach(four);
+	detach(five);
+	detach(six);
+	detach(seven);
+	detach(eight);
+	detach(nine);
+	detach(ten);
+	detach(eleven);
+	detach(twelve);
+}
+
+void PancakeSorter::attachFlipButtons()
+{
+	if(getNumPancakes() >= 2) { attach(p2); }
+	if(getNumPancakes() >= 3) { attach(p3); }
+	if(getNumPancakes() >= 4) { attach(p4); }
+	if(getNumPancakes() >= 5) { attach(p5); }
+	if(getNumPancakes() >= 6) { attach(p6); }
+	if(getNumPancakes() >= 7) { attach(p7); }
+	if(getNumPancakes() >= 8) { attach(p8); }
+	if(getNumPancakes() >= 9) { attach(p9); }
+	if(getNumPancakes() >= 10) { attach(p10); }
+	if(getNumPancakes() >= 11) { attach(p11); }
+	if(getNumPancakes() >= 12) { attach(p12); }
+}
+
+void PancakeSorter::detachFlipButtons()
+{
+	if(getNumPancakes() >= 2) { detach(p2); }
+	if(getNumPancakes() >= 3) { detach(p3); }
+	if(getNumPancakes() >= 4) { detach(p4); }
+	if(getNumPancakes() >= 5) { detach(p5); }
+	if(getNumPancakes() >= 6) { detach(p6); }
+	if(getNumPancakes() >= 7) { detach(p7); }
+	if(getNumPancakes() >= 8) { detach(p8); }
+	if(getNumPancakes() >= 9) { detach(p9); }
+	if(getNumPancakes() >= 10) { detach(p10); }
+	if(getNumPancakes() >= 11) { detach(p11); }
+	if(getNumPancakes() >= 12) { detach(p12); }
+}
+
+void PancakeSorter::detachSplash()
+{
 	detach(bgcolor);
 	detach(mainPancakePic);
 	detach(sidePancakePic1);
@@ -117,10 +135,53 @@ void PancakeSorter::detachSplash(){
 	detach(levelScreenButton);
 }
 
-void PancakeSorter::startInstruct(){
-	
+void PancakeSorter::startInstruct()
+{
 	detachSplash();
-	
+	redraw();
+}
 
+void PancakeSorter::setLevel(int lvl)
+{
+	level = lvl;
+	cout << "Number of Pancakes this level: " << getNumPancakes() << endl;
+	string levelString = "Level " + to_string(lvl);
+	levelText.set_label(levelString);
+
+	redraw();
+}
+
+void PancakeSorter::startGame()
+{
+	// if(level==0)
+	// {
+	// 	popup a window saying NO
+	// }
+
+	detach(levelText);
+
+	hideLevel();
+	//add pancakes
+	addPancakeEllipses();
+	// shuffle the pancakes
+	shufflePancakes();
+	initializePancakePosition();
+	// attach pancakes
+	attachPancakes();
+	attach(exitButton);
+	hideLevel();
+	attachFlipButtons();
+
+	redraw();
+}
+
+void PancakeSorter::exitGame()
+{
+	clearPancakes();
+	detach(exitButton);
+	pancakes.clear();
+	pancakePos.clear();
+	attachLevelButtons();
+	detachFlipButtons();
 	redraw();
 }
