@@ -36,8 +36,6 @@ struct PancakeSorter: Simple_window
 	Vector<HiScore> scores; //vector of 5 highest scores
 	int level = 0;
 	int moves = 0;
-	string player = "";	
-
 	
 	// Splash Screen
 	void startScreen(); //opens level screen
@@ -147,6 +145,7 @@ private:
 	Button levelScreenButton{Point{530,715},80,30,"   START",cb_levelScreen};
 
 	// Level Screen Objects
+	// hiscores
 	Text top5{Point{100,100},"Top 5 Hi-Scores"};
 	Text top5_1{Point{100,120},""};
 	Text top5_2{Point{100,140},""};
@@ -155,9 +154,9 @@ private:
 	Text top5_5{Point{100,200},""};
 	Text scoreText{Point{500, 200}, ""};
 	Text movesText{Point{500, 150}, ""};
-
+	// initials
 	In_box playerInitials{Point{500,250},100,50,"Input Player Initials: "};
-	Text playerText{Point{500,250},player};
+	Text playerText{Point{500,250},""};
 	Text levelText{Point{500,350},"Choose Level"};
 	Button start{Point{450,700},90,30,"START",cb_start};
 	Button two{Point{350,400},90,30,"Level 2",cb_two};
