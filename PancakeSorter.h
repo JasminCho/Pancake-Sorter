@@ -86,6 +86,11 @@ struct PancakeSorter: Simple_window
 	void attachEndScreen();
 	void detachEndScreen();
 
+	// Score
+	void newHiScore();
+	void sortHiScores();
+	int playerScore;
+
 
 	// Callbacks for Start Screen
 	static void cb_instruct(Address, Address window);

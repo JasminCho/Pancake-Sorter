@@ -9,12 +9,25 @@ void PancakeSorter::outputInitials()
 	cout << player << endl;
 }
 
+void PancakeSorter::newHiScore()
+{
+	HiScore myScore(playerInitials.get_string(), playerScore);
+	scores.push_back(myScore);
+
+	sortHiScores();
+}
+
+void PancakeSorter::sortHiScores()
+{
+	sort(scores.begin(), scores.end(), HiScoreSorter());
+}
+
 void PancakeSorter::saveScores()
 {
 	ofstream out;
 	out.open("hiscores.txt");
 
-	for(uint i = 0; i < scores.size(); i++)
+	for(uint i = 0; i < scores.size() && i < 5; i++)
 	{
 		out << scores[i].toString() << "\r\n";
 	}
@@ -71,28 +84,8 @@ void PancakeSorter::calcScore()
 		vector<int>* solution = m_find_solution(pancakePos);
 		int movesLeft = num_moves(solution);
 
-		int playerScore = (100 - 10 * (moves - movesLeft)) * getNumPancakes();
+	 	playerScore = (100 - 10 * (moves - movesLeft)) * getNumPancakes();
 		scoreText.set_label("Score: " + to_string(playerScore));
-
-		cout << "Pancake Stack: [";
-
-		for(uint i = 0; i < pancakePos.size(); i++)
-		{
-			cout << pancakePos[i] << ", ";
-		}
-
-		cout << "]" << endl;
-
-		cout << "Solution: [";
-		for(uint i = 0; i < solution->size(); i++)
-		{
-			cout << solution->at(i) << ", ";
-		}
-
-		cout << "]" << endl;
-
-		cout << "Player Score: " << playerScore << endl;
-		cout << "Moves Left: " << movesLeft << endl;
 
 		if(playerScore <= 0)
 		{

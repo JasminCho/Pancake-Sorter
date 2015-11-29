@@ -190,10 +190,12 @@ void PancakeSorter::attachEndScreen()
 {
 	// show current player score
 	attach(scoreText);
+	attach(endText);
 }
 
 void PancakeSorter::detachEndScreen()
 {
+	detach(endText);
 	detach(playerText);
 
 	// hide current player score
@@ -205,6 +207,7 @@ void PancakeSorter::detachEndScreen()
 void PancakeSorter::gameWin()
 {
 	// you win!
+	newHiScore();
 	saveScores();
 	endText.set_label("You Win!!");
 }
@@ -224,7 +227,6 @@ void PancakeSorter::startGame()
 
 	// reset moves to 0
 	setMoves(0);
-
 
 	// calculate score
 	calcScore();
