@@ -39,7 +39,11 @@ namespace Graph_lib {
         virtual void hide() { pw->hide(); }
         virtual void show() { pw->show(); }
         virtual void attach(Window&) = 0;
-
+        virtual void hide_border()
+        {
+            
+        }
+        
         Point loc;
         int width;
         int height;

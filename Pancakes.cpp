@@ -47,6 +47,8 @@ void PancakeSorter::shufflePancakes()
 	srand(timestamp);
 	// shuffle the pancake position vector in the same sequence as the ellipses
 	random_shuffle(pancakePos.begin(), pancakePos.end());
+	// reverse the position vector because it's inverted
+	reverse(pancakePos.begin(), pancakePos.end());
 
 	for(int i = 0; i < getNumPancakes(); i++)
 	{
@@ -54,19 +56,21 @@ void PancakeSorter::shufflePancakes()
 		int newY = (i * Y_DISTANCE * -1);
 		pancakes[i]->move(0, newY);
 	}
+
+	cout << "shuffled pancakes: ";
+	for(uint i = 0; i < pancakePos.size(); i++)
+	{
+		cout << pancakePos[i] << ", ";
+	}
+	cout << endl;
 }
 
 void PancakeSorter::flipPancake(int clickedPos)
 {
 	int clickedIndex = getNumPancakes() - clickedPos;
 
-	cout << "clickedIndex = " << clickedIndex << endl;
-	cout << "clickedPos = " << clickedPos << endl;
-
 	reverse(pancakes.end() - clickedPos, pancakes.end());
 	reverse(pancakePos.begin(), pancakePos.begin() + clickedPos);
-
-	cout << "Flipping from position: " << clickedPos << endl;
 
 	int topIndex = getNumPancakes() - 1;
 	int botIndex = getNumPancakes() - clickedPos;
@@ -78,6 +82,11 @@ void PancakeSorter::flipPancake(int clickedPos)
 		topIndex--;
 		botIndex++;
 	}
+
+	setMoves(moves+1);
+
+	// calculate score
+	calcScore();
 
 	redraw();
 }
@@ -104,9 +113,6 @@ void PancakeSorter::movePancakes(int topIndex, int botIndex)
 	int pancakeDist = topIndex - botIndex;
 	int dyTop = pancakeDist * PANCAKE_HEIGHT * -2;
 	int dyBot = dyTop * -1;
-
-	cout << "Moving topIndex = " << topIndex << " to " << botIndex << endl;
-	cout << "dyTop = " << dyTop << ", dyBot = " << dyBot << endl;
 
 	pancakes[topIndex]->move(0, dyTop);
 	pancakes[botIndex]->move(0, dyBot);

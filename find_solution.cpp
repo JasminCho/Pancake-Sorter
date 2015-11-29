@@ -28,7 +28,7 @@ int find_pancake(int pancake, const vector<int>& pancakes)
 
 vector<int>* student_solution(const vector<int>& originalPancakes)
 {
-	vector<int> pancakes = originalPancakes;
+	vector<int> pancakes = vector<int>(originalPancakes);
 	vector<int>* solution = new vector<int>();
 	
 

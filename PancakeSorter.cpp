@@ -50,8 +50,20 @@ void PancakeSorter::startScreen()
 void PancakeSorter::showLevel()
 {
 	detachSplash();
-	attach(playerInitials);
 	attachLevelButtons();
+
+	attach(playerInitials);
+	attach(top5);
+	attach(top5_1);
+	attach(top5_2);
+	attach(top5_3);
+	attach(top5_4);
+	attach(top5_5);
+
+	displayScores();
+
+	levelText.set_label("Choose Level");
+
 	redraw();
 }
 
@@ -72,7 +84,7 @@ void PancakeSorter::attachLevelButtons()
 	attach(levelText);
 }
 
-void PancakeSorter::hideLevel()
+void PancakeSorter::detachLevel()
 {
 	detach(start);
 	detach(two);
@@ -86,6 +98,18 @@ void PancakeSorter::hideLevel()
 	detach(ten);
 	detach(eleven);
 	detach(twelve);
+
+	detach(levelText);
+
+	detach(playerInitials);
+
+	// top 5 scores
+	detach(top5);
+	detach(top5_1);
+	detach(top5_2);
+	detach(top5_3);
+	detach(top5_4);
+	detach(top5_5);
 }
 
 void PancakeSorter::attachFlipButtons()
@@ -101,22 +125,6 @@ void PancakeSorter::attachFlipButtons()
 	if(getNumPancakes() >= 10) { attach(p10); }
 	if(getNumPancakes() >= 11) { attach(p11); }
 	if(getNumPancakes() >= 12) { attach(p12); }
-	makeFlipInvisible();
-}
-
-void PancakeSorter::makeFlipInvisible()
-{
-	p2.hide_border();
-	p3.hide_border();
-	p4.hide_border();
-	p5.hide_border();
-	p6.hide_border();
-	p7.hide_border();
-	p8.hide_border();
-	p9.hide_border();
-	p10.hide_border();
-	p11.hide_border();
-	p12.hide_border();
 }
 
 void PancakeSorter::detachFlipButtons()
@@ -178,6 +186,35 @@ void PancakeSorter::setLevel(int lvl)
 	redraw();
 }
 
+void PancakeSorter::attachEndScreen()
+{
+	// show current player score
+	attach(scoreText);
+}
+
+void PancakeSorter::detachEndScreen()
+{
+	detach(playerText);
+
+	// hide current player score
+	detach(scoreText);
+	// hide current moves
+	detach(movesText);
+}
+
+void PancakeSorter::gameWin()
+{
+	// you win!
+	saveScores();
+	endText.set_label("You Win!!");
+}
+
+void PancakeSorter::gameLose()
+{
+	// you lose!
+	endText.set_label("You lose :(");
+}
+
 void PancakeSorter::startGame()
 {
 	// if(level==0)
@@ -185,37 +222,48 @@ void PancakeSorter::startGame()
 	// 	popup a window saying NO
 	// }
 
-	detach(levelText);
+	// reset moves to 0
+	setMoves(0);
+
+
+	// calculate score
+	calcScore();
+	// show current moves
+	attach(movesText);
 
 	attach(playerText);
 	playerText.set_label(playerInitials.get_string());
 
-	hideLevel();
+	detachLevel();
 	//add pancakes
 	addPancakeEllipses();
+	initializePancakePosition();
 	// shuffle the pancakes
 	shufflePancakes();
-	initializePancakePosition();
 	// attach pancakes
 	attachPancakes();
 	attach(exitButton);
-	hideLevel();
 	attachFlipButtons();
 	outputInitials();
-	detach(playerInitials);
+
 	redraw();
+}
+
+void PancakeSorter::detachGameScreen()
+{
+	clearPancakes();
+	pancakes.clear();
+	pancakePos.clear();
+	detachFlipButtons();
 }
 
 void PancakeSorter::exitGame()
 {
-	clearPancakes();
+	detachGameScreen();
+	detachEndScreen();
 	detach(exitButton);
-	detach(playerText);
-	pancakes.clear();
-	pancakePos.clear();
-	attachLevelButtons();
-	detachFlipButtons();
-	attach(playerInitials);
-	string levelString = "Choose Level";
+
+	showLevel();
+	
 	redraw();
 }

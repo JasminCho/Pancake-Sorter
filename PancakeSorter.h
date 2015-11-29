@@ -35,6 +35,7 @@ struct PancakeSorter: Simple_window
 	Vector<int> pancakePos; //pancake positions vector
 	Vector<HiScore> scores; //vector of 5 highest scores
 	int level = 0;
+	int moves = 0;
 	string player = "";	
 
 	
@@ -51,7 +52,7 @@ struct PancakeSorter: Simple_window
 	void startGame(); //starts actual game
 	void showLevel(); //displays level on level screen
 	void setLevel(int numlvl); //sets the chosen level
-	void hideLevel(); //detaches all buttons on level screen
+	void detachLevel(); //detaches all buttons on level screen
 	void outputInitials(); //display player initials
 
 	// Pancake functions
@@ -71,9 +72,20 @@ struct PancakeSorter: Simple_window
 
 	// Game Screen
 	void exitGame(); //to exit game screen
-	void makeFlipInvisible(); //make buttons invisible
-	void calcScore(int numFlips, int timeLeft); //calculates player's final score
+	void calcScore(); //calculates player's final score
 	void loadScores();
+	void saveScores();
+	void displayScores();
+	void displayScores(Text &text, int index);
+	void setMoves(int newMoves);
+	void detachGameScreen();
+	void gameLose();
+	void gameWin();
+
+	// Win Screen
+	void attachEndScreen();
+	void detachEndScreen();
+
 
 	// Callbacks for Start Screen
 	static void cb_instruct(Address, Address window);
@@ -129,7 +141,16 @@ private:
 	Text levelScreenLabel{Point{532,732},"   START"};
 	Button levelScreenButton{Point{530,715},80,30,"   START",cb_levelScreen};
 
-	//Level Screen
+	// Level Screen Objects
+	Text top5{Point{100,100},"Top 5 Hi-Scores"};
+	Text top5_1{Point{100,120},""};
+	Text top5_2{Point{100,140},""};
+	Text top5_3{Point{100,160},""};
+	Text top5_4{Point{100,180},""};
+	Text top5_5{Point{100,200},""};
+	Text scoreText{Point{500, 200}, ""};
+	Text movesText{Point{500, 150}, ""};
+
 	In_box playerInitials{Point{500,250},100,50,"Input Player Initials: "};
 	Text playerText{Point{500,250},player};
 	Text levelText{Point{500,350},"Choose Level"};
@@ -146,6 +167,7 @@ private:
 	Button eleven{Point{460,500},90,30,"Level 11",cb_eleven};
 	Button twelve{Point{570,500},90,30,"Level 12",cb_twelve};
 
+	// Game Screen Objects
 	Button p2{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 11", cb_flip11};
 	Button p3{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(1 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 10", cb_flip10};
 	Button p4{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(2 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 9", cb_flip9};
@@ -160,5 +182,8 @@ private:
 
 	Button exitButton{Point{100,100},90,30,"Quit",cb_exitGame};
 	Button backButton{Point{100,100},90,30,"Back",cb_back};
+
+	// End Screen Objects
+	Text endText{Point{500,350},""};
 };
 #endif
