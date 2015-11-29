@@ -201,8 +201,7 @@ void PancakeSorter::detachInstruct()
 void PancakeSorter::startFromInstruct()
 {
 	detachInstruct();
-	attachLevelButtons();
-	attach(playerInitials);
+	showLevel();
 	detach(instructToLevel);
 	redraw();
 	

@@ -159,6 +159,7 @@ private:
 	Text lineSix{Point{25,385}, "Your score is 0 if you do too many flips."};
 	Button instructToLevel{Point{450,700},90,30,"START",cb_instructToLevel};
 
+
 	// Level Screen Objects
 	// hiscores
 	Text top5{Point{100,100},"Top 5 Hi-Scores"};
