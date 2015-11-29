@@ -1,5 +1,5 @@
 //pancake sorter
-
+#include <FL/fl_ask.H>
 #include "PancakeSorter.h"
 
 PancakeSorter::PancakeSorter(Point xy, int w, int h, const string& title)
@@ -188,6 +188,7 @@ void PancakeSorter::setLevel(int lvl)
 
 void PancakeSorter::attachEndScreen()
 {
+	detachFlipButtons();
 	// show current player score
 	attach(scoreText);
 	attach(endText);
@@ -210,23 +211,54 @@ void PancakeSorter::gameWin()
 	newHiScore();
 	saveScores();
 	endText.set_label("You Win!!");
+
+	redraw();
+
+	askPlayAgain("You Win!! What do you want to do?");
 }
 
 void PancakeSorter::gameLose()
 {
 	// you lose!
 	endText.set_label("You lose :(");
+	askPlayAgain("You lose :( What do you want to do?");
+}
+
+void PancakeSorter::askPlayAgain(const char* message)
+{
+	const int BUTTON_PLAY_AGAIN = 0;
+	const int BUTTON_LEVEL_SCREEN = 1;
+	const int BUTTON_CLOSE_GAME = 2;
+
+	int choice = fl_choice(message, "Play again", "Back", "Close game");
+
+	if(choice == BUTTON_PLAY_AGAIN)
+	{
+		detachGameScreen();
+		setupGame();
+	}
+	else if(choice == BUTTON_LEVEL_SCREEN)
+	{
+		exitGame();
+	}
+	else if(choice == BUTTON_CLOSE_GAME)
+	{
+		exit(0);
+	}
 }
 
 void PancakeSorter::startGame()
 {
-	// if(level==0)
-	// {
-	// 	popup a window saying NO
-	// }
-
-	// reset moves to 0
-	setMoves(0);
+	if(level == 0)
+	{
+ 		fl_alert("You must select a level");
+ 		return;
+	}
+	else if(playerInitials.get_string() == "")
+	{
+		fl_alert("You must enter your initials");
+		return;
+	}
 
 	// show current moves
 	attach(movesText);
@@ -235,6 +267,18 @@ void PancakeSorter::startGame()
 	playerText.set_label(playerInitials.get_string());
 
 	detachLevel();
+	attach(exitButton);
+
+	setupGame();
+
+	redraw();
+}
+
+void PancakeSorter::setupGame()
+{
+	// reset moves to 0
+	setMoves(0);
+
 	//add pancakes
 	addPancakeEllipses();
 	initializePancakePosition();
@@ -242,13 +286,10 @@ void PancakeSorter::startGame()
 	shufflePancakes();
 	// attach pancakes
 	attachPancakes();
-	attach(exitButton);
 	attachFlipButtons();
 	outputInitials();
 	// calculate score
 	calcScore();
-
-	redraw();
 }
 
 void PancakeSorter::detachGameScreen()

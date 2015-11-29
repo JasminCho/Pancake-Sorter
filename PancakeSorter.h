@@ -69,6 +69,7 @@ struct PancakeSorter: Simple_window
 	void clearPancakes(); //clears pancakes in ellipse vector
 
 	// Game Screen
+	void setupGame();
 	void exitGame(); //to exit game screen
 	void calcScore(); //calculates player's final score
 	void loadScores();
@@ -83,6 +84,7 @@ struct PancakeSorter: Simple_window
 	// Win Screen
 	void attachEndScreen();
 	void detachEndScreen();
+	void askPlayAgain(const char* message); // const char* instead of string because fltk
 
 	// Score
 	void newHiScore();
