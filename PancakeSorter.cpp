@@ -42,6 +42,7 @@ void PancakeSorter::startScreen()
 	attach(levelScreenLabel);
 	attach(levelScreenButton);
 
+	//images
 	attach(mainPancakePic);
 	attach(sidePancakePic1);
 	attach(sidePancakePic2);
@@ -50,8 +51,9 @@ void PancakeSorter::startScreen()
 void PancakeSorter::showLevel()
 {
 	detachSplash();
+	
 	attachLevelButtons();
-
+	
 	attach(playerInitials);
 	attach(top5);
 	attach(top5_1);
@@ -164,6 +166,8 @@ void PancakeSorter::detachSplash()
 void PancakeSorter::startInstruct()
 {
 	detachSplash();
+	bgcolor.set_fill_color(fl_rgb_color(30,216,230)); //background color
+	attach(bgcolor);
 	instTitle.set_font(Graph_lib::Font::screen_bold);
 	instTitle.set_font_size(30);
 	lineOne.set_font_size(20);
@@ -179,7 +183,15 @@ void PancakeSorter::startInstruct()
 	attach(lineFour);
 	attach(lineFive);
 	attach(lineSix);
+	
+	//button
+	instToLevelRect.set_fill_color(Color::white);
+	instToLevelRect.set_color(Color::invisible);
+	attach(instToLevelRect);
+	instToLevelLabel.set_font(Graph_lib::Font::screen_bold);
+	attach(instToLevelLabel);
 	attach(instructToLevel);
+	
 	redraw();
 }
 
@@ -192,6 +204,10 @@ void PancakeSorter::detachInstruct()
 	detach(lineFour);
 	detach(lineFive);
 	detach(lineSix);
+	detach(instToLevelRect);
+	detach(instToLevelLabel);
+	detach(instructToLevel);
+	
 }
 
 void PancakeSorter::startFromInstruct()
