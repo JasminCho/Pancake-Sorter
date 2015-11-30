@@ -331,12 +331,23 @@ void PancakeSorter::setupGame()
 	initializePancakePosition();
 	// shuffle the pancakes
 	shufflePancakes();
+	//attach background
+        bgGameScreen.set_color(fl_rgb_color(255,255,255));
+        bgGameScreen.set_fill_color(fl_rgb_color(255,255,255));
+	//attach(bgGameScreen);
 	// attach pancakes
 	attachPancakes();
 	attachFlipButtons();
 	outputInitials();
-
-	// calculate score
+	//attach hint, back, exit boxes, and background
+	hintBox.set_fill_color(fl_rgb_color(255,215,0));
+	exitBox.set_fill_color(fl_rgb_color(255,215,0));
+	backBox.set_fill_color(fl_rgb_color(255,215,0));
+	attach(hintBox); attach(hintText);
+	attach(exitBox); attach(exitText);
+	attach(backBox); attach(backText);
+	
+	//calculate score
 	calcMinMoves();
 	calcScore();
 	// calculate if the game has already been won by the random shuffle
@@ -350,10 +361,15 @@ void PancakeSorter::detachGameScreen()
 	pancakePos.clear();
 	detachFlipButtons();
 	detach(hintButton);
+	//detach(bgGameScreen);
+	detach(hintBox); detach(hintText);
+	detach(exitBox); detach(exitText);
+	detach(backBox); detach(backText);
 }
 
 void PancakeSorter::exitGame()
 {
+	
 	detachGameScreen();
 	detachEndScreen();
 	detach(exitButton);

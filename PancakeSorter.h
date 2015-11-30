@@ -151,14 +151,14 @@ private:
 	Text jc{Point{440,200},"Jasmin Cho"};
 	Text jg{Point{730,200},"Jacob Goldsworthy"};
 	Image mainPancakePic{Point{180,200},"mainpic.jpg"};
-	Image sidePancakePic1{Point{5,600},"sidepan.jpg"};
-	Image sidePancakePic2{Point{800,600},"sidepanflip.jpg"};
+	Image sidePancakePic1{Point{5,550},"sidepan.jpg"};
+	Image sidePancakePic2{Point{800,550},"sidepanflip.jpg"};
 	Rectangle instruct{Point{350,715},98,30};
-	Text instructLabel{Point{352,732},"  How to Play"};
-	Button instructButton{Point{350,715},98,30,"  How to Play",cb_instruct};
-	Rectangle levelScreen{Point{530,715},80,30};
-	Text levelScreenLabel{Point{532,732},"   START"};
-	Button levelScreenButton{Point{530,715},80,30,"   START",cb_levelScreen};
+	Text instructLabel{Point{350,730},"  How to Play"};
+	Button instructButton{Point{350,756},98,30,"  How to Play",cb_instruct};
+	Rectangle levelScreen{Point{530,715},98,30};
+	Text levelScreenLabel{Point{540,728},"   START"};
+	Button levelScreenButton{Point{530,756},98,30,"   START",cb_levelScreen};
 
 	//Instruction Screen
 	
@@ -170,7 +170,7 @@ private:
 	Text lineFive{Point{25,340}, "The game is over when pancakes are sorted and top scores will be recorded."};
 	Text lineSix{Point{25,385}, "Your score is 0 if you do too many flips."};
 	Rectangle instToLevelRect{Point{450,700},90,30};
-	Text instToLevelLabel{Point{453,717},"    START"};
+	Text instToLevelLabel{Point{453,715},"    START"};
 	Button instructToLevel{Point{450,700},90,30,"START",cb_instructToLevel};
 
 
@@ -202,6 +202,7 @@ private:
 	Button twelve{Point{570,500},90,30,"Level 12",cb_twelve};
 
 	// Game Screen Objects
+	Rectangle bgGameScreen{Point{0,0},1000,800};
 	Button p2{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 11", cb_flip11};
 	Button p3{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(1 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 10", cb_flip10};
 	Button p4{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(2 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 9", cb_flip9};
@@ -215,7 +216,13 @@ private:
 	Button p12{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(10 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 1", cb_flip1};
 
 	Button hintButton{Point{200, 100}, 90, 30, "Hint", cb_hint};
-	Button exitButton{Point{100,100},90,30,"Quit",cb_exitGame};
+	Rectangle hintBox{Point{200,100},90,30};
+	Text hintText{Point{215,125},"Hint"};
+	Button exitButton{Point{300,100},90,30,"Quit",cb_exitGame};
+	Rectangle exitBox{Point{300,100},90,30};
+	Text exitText{Point{315,125},"Exit"};
 	Button backButton{Point{100,100},90,30,"Back",cb_back};
+	Rectangle backBox{Point{100,100},90,30};
+	Text backText{Point{115,125},"Back"};
 };
 #endif
