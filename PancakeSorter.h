@@ -17,10 +17,10 @@ struct PancakeSorter: Simple_window
 	// constants for pancakes and flip buttons
 	const int CENTER_X = 500;
 	const int PANCAKE_HEIGHT = 20;
-	
+
 	const int Y_DISTANCE = 40;
 	const int Y_START = 700;
-	
+
 	const int WIDTH_START = 50;
 	const int WIDTH_SCALE = 30;
 	const int WIDTH_MAX = WIDTH_START+(WIDTH_SCALE*12)*2;
@@ -28,15 +28,18 @@ struct PancakeSorter: Simple_window
 	const int FLIP_BUTTON_X = CENTER_X - (WIDTH_MAX / 2);
 	const int FLIP_BUTTON_Y = Y_START - (PANCAKE_HEIGHT);
 
+	// pancake Color
+	Color getPancakeColor();
+
 	// window
 	PancakeSorter(Point(xy),int w,int h,const string& title);
-	
+
 	Vector<Ellipse*> pancakes; //ellipses vector
 	Vector<int> pancakePos; //pancake positions vector
 	Vector<HiScore> scores; //vector of 5 highest scores
 	int level = 0;
 	int moves = 0;
-	
+
 	// Splash Screen
 	void startScreen(); //opens level screen
 	void startInstruct(); //opens instruction screen
@@ -44,7 +47,7 @@ struct PancakeSorter: Simple_window
 
 	// Instruction Screen
 	void back(); //back to splash screen from instruction screen
-	void detachInstruct();//detaches instruction 
+	void detachInstruct();//detaches instruction
 	void startFromInstruct();//from instruction to level screen
 
 	// Level Chooser Screen
@@ -82,6 +85,10 @@ struct PancakeSorter: Simple_window
 	void detachGameScreen();
 	void gameLose();
 	void gameWin();
+	void hint();
+	int minMoves = 0;
+	void calcMinMoves();
+	void calcWinLose();
 
 	// Win Screen
 	void attachEndScreen();
@@ -89,6 +96,8 @@ struct PancakeSorter: Simple_window
 	void askPlayAgain(const char* message); // const char* instead of string because fltk
 
 	// Score
+	vector<int>* getSolution();
+	string getPlayerInitials();
 	void newHiScore();
 	void sortHiScores();
 	int playerScore;
@@ -117,6 +126,7 @@ struct PancakeSorter: Simple_window
 	static void cb_twelve(Address, Address window);
 
 	// Callbacks for Game Screen
+	static void cb_hint(Address, Address window);
 	static void cb_exitGame(Address, Address window);
 	static void cb_flip1(Address, Address window);
 	static void cb_flip2(Address, Address window);
@@ -129,6 +139,7 @@ struct PancakeSorter: Simple_window
 	static void cb_flip9(Address, Address window);
 	static void cb_flip10(Address, Address window);
 	static void cb_flip11(Address, Address window);
+
 
 private:
 
@@ -200,10 +211,8 @@ private:
 	Button p11{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(9 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 2", cb_flip2};
 	Button p12{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(10 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 1", cb_flip1};
 
+	Button hintButton{Point{200, 100}, 90, 30, "Hint", cb_hint};
 	Button exitButton{Point{100,100},90,30,"Quit",cb_exitGame};
 	Button backButton{Point{100,100},90,30,"Back",cb_back};
-
-	// End Screen Objects
-	Text endText{Point{500,350},""};
 };
 #endif

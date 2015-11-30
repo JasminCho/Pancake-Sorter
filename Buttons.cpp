@@ -150,3 +150,8 @@ void PancakeSorter::cb_flip1(Address, Address window)
 	PancakeSorter &win = reference_to<PancakeSorter>(window);
 	win.flipPancake(win.getNumPancakes() - 10);
 }
+
+void PancakeSorter::cb_hint(Address, Address window)
+{
+	reference_to<PancakeSorter>(window).hint();
+}

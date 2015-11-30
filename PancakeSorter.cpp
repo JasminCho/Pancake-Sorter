@@ -14,7 +14,7 @@ void PancakeSorter::startScreen()
 	//background
 	bgcolor.set_fill_color(fl_rgb_color(16,179,122));
 	attach(bgcolor);
-	
+
 	//Texts
 	gameTitle.set_font(Graph_lib::Font::screen_bold);
 	gameTitle.set_font_size(50);
@@ -27,7 +27,7 @@ void PancakeSorter::startScreen()
 	attach(bl);
 	attach(jc);
 	attach(jg);
-	
+
 	//buttons
 	instruct.set_fill_color(Color::white);
 	instruct.set_color(Color::invisible);
@@ -181,12 +181,10 @@ void PancakeSorter::startInstruct()
 	attach(lineSix);
 	attach(instructToLevel);
 	redraw();
-	
 }
 
 void PancakeSorter::detachInstruct()
 {
-	
 	detach(instTitle);
 	detach(lineOne);
 	detach(lineTwo);
@@ -194,8 +192,6 @@ void PancakeSorter::detachInstruct()
 	detach(lineFour);
 	detach(lineFive);
 	detach(lineSix);
-
-
 }
 
 void PancakeSorter::startFromInstruct()
@@ -204,7 +200,6 @@ void PancakeSorter::startFromInstruct()
 	showLevel();
 	detach(instructToLevel);
 	redraw();
-	
 }
 
 void PancakeSorter::back()
@@ -230,12 +225,10 @@ void PancakeSorter::attachEndScreen()
 	detachFlipButtons();
 	// show current player score
 	attach(scoreText);
-	attach(endText);
 }
 
 void PancakeSorter::detachEndScreen()
 {
-	detach(endText);
 	detach(playerText);
 
 	// hide current player score
@@ -249,7 +242,6 @@ void PancakeSorter::gameWin()
 	// you win!
 	newHiScore();
 	saveScores();
-	endText.set_label("You Win!!");
 
 	redraw();
 
@@ -259,7 +251,6 @@ void PancakeSorter::gameWin()
 void PancakeSorter::gameLose()
 {
 	// you lose!
-	endText.set_label("You lose :(");
 	askPlayAgain("You lose :( What do you want to do?");
 }
 
@@ -293,7 +284,7 @@ void PancakeSorter::startGame()
  		fl_alert("You must select a level");
  		return;
 	}
-	else if(playerInitials.get_string() == "")
+	else if(getPlayerInitials() == "")
 	{
 		fl_alert("You must enter your initials");
 		return;
@@ -301,9 +292,8 @@ void PancakeSorter::startGame()
 
 	// show current moves
 	attach(movesText);
-
 	attach(playerText);
-	playerText.set_label(playerInitials.get_string());
+	playerText.set_label(getPlayerInitials());
 
 	detachLevel();
 	attach(exitButton);
@@ -318,6 +308,8 @@ void PancakeSorter::setupGame()
 	// reset moves to 0
 	setMoves(0);
 
+	attach(hintButton);
+
 	//add pancakes
 	addPancakeEllipses();
 	initializePancakePosition();
@@ -327,8 +319,12 @@ void PancakeSorter::setupGame()
 	attachPancakes();
 	attachFlipButtons();
 	outputInitials();
+
 	// calculate score
+	calcMinMoves();
 	calcScore();
+	// calculate if the game has already been won by the random shuffle
+	calcWinLose();
 }
 
 void PancakeSorter::detachGameScreen()
@@ -337,6 +333,7 @@ void PancakeSorter::detachGameScreen()
 	pancakes.clear();
 	pancakePos.clear();
 	detachFlipButtons();
+	detach(hintButton);
 }
 
 void PancakeSorter::exitGame()
@@ -344,8 +341,7 @@ void PancakeSorter::exitGame()
 	detachGameScreen();
 	detachEndScreen();
 	detach(exitButton);
-
 	showLevel();
-	
+
 	redraw();
 }

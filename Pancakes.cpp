@@ -4,11 +4,16 @@
 
 #include "PancakeSorter.h"
 
+Color PancakeSorter::getPancakeColor()
+{
+	const Color PANCAKE_COLOR(fl_rgb_color(0xD6, 0xC9, 0x65));
+	return PANCAKE_COLOR;
+}
+
 void PancakeSorter::addPancake(int y, int w)
 {
-	Color PANCAKE_COLOR(fl_rgb_color(0xD6, 0xC9, 0x65));
 	Ellipse *p = new Ellipse{Point{CENTER_X, y}, w, PANCAKE_HEIGHT};
-	p->set_fill_color(PANCAKE_COLOR);
+	p->set_fill_color(getPancakeColor());
 	pancakes.push_back(p);
 }
 
@@ -87,6 +92,7 @@ void PancakeSorter::flipPancake(int clickedPos)
 
 	// calculate score
 	calcScore();
+	calcWinLose();
 
 	redraw();
 }
@@ -129,4 +135,38 @@ void PancakeSorter::attachPancakes()
 int PancakeSorter::getNumPancakes()
 {
 	return level;
+}
+
+void PancakeSorter::hint()
+{
+	vector<int>* solution = getSolution();
+
+	// ellipses are drawn from bottom up, so 0 is at the bottom
+	int nextFlipIndex = getNumPancakes() - solution->at(0);
+
+	if(getNumPancakes() > 9)
+	{
+		nextFlipIndex--;
+	}
+
+	// get a pointer to the hinted pancake ellipse
+	Ellipse* nextPancake = pancakes[nextFlipIndex];
+
+	// highlight the next best move in blue
+	nextPancake->set_fill_color(FL_DARK_BLUE);
+	redraw();
+	Fl::wait(500);
+	nextPancake->set_fill_color(getPancakeColor());
+	redraw();
+}
+
+// returns an all-caps version of the entered player initials
+string PancakeSorter::getPlayerInitials()
+{
+	string str = playerInitials.get_string();
+	for(int i = 0; i < str.size(); i++)
+	{
+	    str[i] = toupper(str[i]);
+	}
+	return str;
 }
