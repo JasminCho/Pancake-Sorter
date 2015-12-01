@@ -75,6 +75,8 @@ struct PancakeSorter: Simple_window
 	void clearPancakes(); //clears pancakes in ellipse vector
 
 	// Game Screen
+	bool checkErrors();
+	bool checkInitials();
 	void setupGame();
 	void exitGame(); //to exit game screen
 	void calcScore(); //calculates player's final score
@@ -87,6 +89,9 @@ struct PancakeSorter: Simple_window
 	void gameLose();
 	void gameWin();
 	void hint();
+	static void hintFlashStart(void* hf);
+	static void hintFlashEnd(void* hf);
+
 	int minMoves = 0;
 	void calcMinMoves();
 	void calcWinLose();
@@ -101,6 +106,7 @@ struct PancakeSorter: Simple_window
 	string getPlayerInitials();
 	void newHiScore();
 	void sortHiScores();
+	void setPlayerScore(int newScore);
 	int playerScore;
 
 
@@ -154,12 +160,14 @@ private:
 	Image mainPancakePic{Point{180,200},"mainpic.jpg"};
 	Image sidePancakePic1{Point{5,550},"sidepan.jpg"};
 	Image sidePancakePic2{Point{800,550},"sidepanflip.jpg"};
+	
 	Rectangle instruct{Point{360,715},98,30};
+	Button instructButton{Point{360,715},98,30,"  How to Play",cb_instruct};
 	Text instructLabel{Point{360,732},"  How to Play"};
-	Button instructButton{Point{360,756},98,30,"  How to Play",cb_instruct};
+	
 	Rectangle levelScreen{Point{540,715},98,30};
+	Button levelScreenButton{Point{540,715},98,30,"   START",cb_levelScreen};
 	Text levelScreenLabel{Point{550,732},"   START"};
-	Button levelScreenButton{Point{540,756},98,30,"   START",cb_levelScreen};
 
 	//Instruction Screen
 	
@@ -183,11 +191,9 @@ private:
 	Text top5_3{Point{100,160},""};
 	Text top5_4{Point{100,180},""};
 	Text top5_5{Point{100,200},""};
-	Text scoreText{Point{460, 200}, ""};
-	Text movesText{Point{470, 150}, ""};
+
 	// initials
 	In_box playerInitials{Point{500,250},100,50,"Input Player Initials: "};
-	Text playerText{Point{492,250},""};
 	Text levelText{Point{500,350},"Choose Level"};
 	Button start{Point{450,700},90,30,"START",cb_start};
 	Button two{Point{350,400},90,30,"Level 2",cb_two};
@@ -203,6 +209,19 @@ private:
 	Button twelve{Point{570,500},90,30,"Level 12",cb_twelve};
 
 	// Game Screen Objects
+	Text scoreText{Point{400, 210}, ""};
+	Text movesText{Point{430, 160}, ""};
+	Text minMovesText{Point{430, 110}, ""};
+	Text playerText{Point{440,60},""};
+
+	Button hintButton{Point{20, 20}, 90, 30, "Hint", cb_hint};
+	Rectangle hintBox{Point{20,20},90,30};
+	Text hintText{Point{45,43},"Hint"};
+	Button exitButton{Point{120,20},90,30,"Back",cb_exitGame};
+	Rectangle exitBox{Point{120,20},90,30};
+	Text exitText{Point{140,43},"Back"};
+	
+
 	Rectangle bgGameScreen{Point{0,0},1000,800};
 	Button p2{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 11", cb_flip11};
 	Button p3{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(1 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 10", cb_flip10};
@@ -215,13 +234,5 @@ private:
 	Button p10{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(8 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 3", cb_flip3};
 	Button p11{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(9 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 2", cb_flip2};
 	Button p12{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(10 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 1", cb_flip1};
-
-	Button hintButton{Point{200, 100}, 90, 30, "Hint", cb_hint};
-	Rectangle hintBox{Point{200,100},90,30};
-	Text hintText{Point{215,125},"Hint"};
-	Button exitButton{Point{300,100},90,30,"Quit",cb_exitGame};
-	Rectangle exitBox{Point{300,100},90,30};
-	Text exitText{Point{315,125},"Back"};
-	Button backButton{Point{100,100},90,30,"Back",cb_back};
 };
 #endif

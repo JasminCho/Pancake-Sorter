@@ -227,7 +227,6 @@ void PancakeSorter::back()
 {
 	attachLevelButtons();
 	attach(playerText);
-	detach(backButton);
 	redraw();
 }
 
@@ -261,12 +260,28 @@ void PancakeSorter::detachEndScreen()
 void PancakeSorter::gameWin()
 {
 	// you win!
+	const char* winMessage = "You Win!! What do you want to do?";
+
+	// For some stacks of more than 9 pancakes (like 1 2 3 4 5 6 10 9 8 7, with the 1 on top)
+	//  this overestimates the minimum, so if the player actually gets the 
+	// pancakes into order with fewer flips, add a “super bonus” of an extra 
+	// 1000 points to the score with some message like “Wow!  You beat the computer!  
+	//You win 1000 extra bonus points!”  Use this test case to be sure your bonus works.
+	if(getNumPancakes() > 9)
+	{
+		if(moves < minMoves)
+		{
+			setPlayerScore(playerScore + 1000);
+			winMessage = "You beat the computer! You get 1000 extra bonus points! What do you want to do?";
+		}
+	}
+
 	newHiScore();
 	saveScores();
 
 	redraw();
 
-	askPlayAgain("You Win!! What do you want to do?");
+	askPlayAgain(winMessage);
 }
 
 void PancakeSorter::gameLose()
@@ -298,21 +313,63 @@ void PancakeSorter::askPlayAgain(const char* message)
 	}
 }
 
-void PancakeSorter::startGame()
+bool PancakeSorter::checkInitials()
+{
+	if(getPlayerInitials() == "")
+	{
+		fl_alert("You must enter your initials");
+		return false;
+	}
+	else
+	{
+		// check if initials are only letters
+		string name = getPlayerInitials();
+		const int ASCII_UPPER_A = 65;
+		const int ASCII_UPPER_Z = 90;
+		for(uint i = 0; i < name.size(); i++)
+		{
+			// only need to check A-Z, because getPlayerInitials() returns all caps
+			if(name[i] < ASCII_UPPER_A || name[i] > ASCII_UPPER_Z)
+			{
+				fl_alert("Initials must be only be letters (A-Z)");
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+
+bool PancakeSorter::checkErrors()
 {
 	if(level == 0)
 	{
  		fl_alert("You must select a level");
- 		return;
+ 		return false;
 	}
-	else if(getPlayerInitials() == "")
+	else {
+		return checkInitials();
+	}
+}
+
+void PancakeSorter::startGame()
+{
+	if(!checkErrors())
 	{
-		fl_alert("You must enter your initials");
 		return;
 	}
 
+	hintText.set_font_size(22);
+	exitText.set_font_size(22);
+	playerText.set_font_size(40);
+	scoreText.set_font_size(50);
+	movesText.set_font_size(40);
+	minMovesText.set_font_size(40);
+
+
 	// show current moves
 	attach(movesText);
+	attach(minMovesText);
 	attach(playerText);
 	playerText.set_label(getPlayerInitials());
 
@@ -334,7 +391,8 @@ void PancakeSorter::setupGame()
 	detach(scoreText); detach(movesText);
 	attach(scoreText); attach(movesText);
 	detach(playerText); attach(playerText);
-        // reset moves to 0
+	detach(minMovesText); attach(minMovesText);
+    // reset moves to 0
 	setMoves(0);
 
 	//add pancakes
@@ -367,6 +425,7 @@ void PancakeSorter::detachGameScreen()
 	detachFlipButtons();
 	detach(hintButton);
 	detach(bgGameScreen);
+	detach(minMovesText);
 	detach(hintBox); detach(hintText);
 	detach(exitBox); detach(exitText);
 }

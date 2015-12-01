@@ -6,7 +6,6 @@
 void PancakeSorter::outputInitials()
 {
 	string player = getPlayerInitials();
-	cout << player << endl;
 }
 
 void PancakeSorter::newHiScore()
@@ -48,11 +47,6 @@ void PancakeSorter::loadScores()
 		scores.push_back(HS1);
 	}
 
-	for(uint i = 0; i < scores.size(); i++)
-	{
-		cout << scores[i].playerName << " " << scores[i].score << endl;
-	}
-
 	in.close();
 }
 
@@ -87,16 +81,22 @@ void PancakeSorter::calcMinMoves()
 {
 	vector<int>* solution = getSolution();
 	minMoves = num_moves(solution);
+	minMovesText.set_label("Can be done in " + to_string(minMoves) + "flips");
 }
 
-// For some stacks of more than 9 pancakes (like 1 2 3 4 5 6 10 9 8 7, with the 1 on top), this overestimates the minimum, so if the player actually gets the pancakes into order with fewer flips, add a “super bonus” of an extra 1000 points to the score with some message like “Wow!  You beat the computer!  You win 1000 extra bonus points!”  Use this test case to be sure your bonus works.
 void PancakeSorter::calcScore()
 {
 	if(pancakePos.size() > 0)
 	{
-	 	playerScore = (100 - 10 * (moves - minMoves)) * getNumPancakes();
+	 	setPlayerScore((100 - 10 * (moves - minMoves)) * getNumPancakes());
 		scoreText.set_label("Score: " + to_string(playerScore));
 	}
+}
+
+void PancakeSorter::setPlayerScore(int newScore)
+{
+	playerScore = newScore;
+	scoreText.set_label("Score: " + to_string(playerScore));
 }
 
 void PancakeSorter::calcWinLose()

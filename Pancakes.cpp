@@ -3,6 +3,7 @@
 //everything related to pancakes
 
 #include "PancakeSorter.h"
+#include "HintFlash.h"
 
 Color PancakeSorter::getPancakeColor()
 {
@@ -150,6 +151,41 @@ int PancakeSorter::getNumPancakes()
 	return level;
 }
 
+// highlight the pancake in a neon green border
+void PancakeSorter::hintFlashStart(void* hf)
+{
+	// HintFlash is a class that has 2 pointers
+	// One points to the PancakeSorter window class for redraw() and getPancakeColor()
+	// Another points to an ellipse which is the pancake that should be flashed
+	HintFlash* instance = static_cast<HintFlash*>(hf);
+	const Color NEON_GREEN = fl_rgb_color(57, 255, 20);
+
+	instance->pancake->set_style(Line_style(Line_style::solid, 6));
+	instance->pancake->set_color(NEON_GREEN);
+	instance->window->redraw();
+
+	// delete the HintFlash instance
+	delete instance;
+}
+
+// reset the border back to normal
+void PancakeSorter::hintFlashEnd(void* hf)
+{
+	// HintFlash is a class that has 2 pointers
+	// One points to the PancakeSorter window class for redraw() and getPancakeColor()
+	// Another points to an ellipse which is the pancake that should be flashed
+	HintFlash* instance = static_cast<HintFlash*>(hf);
+	Color newColor = instance->window->getPancakeColor();
+
+	instance->pancake->set_style(Line_style(Line_style::solid, 1));
+	instance->pancake->set_fill_color(newColor);
+	instance->pancake->set_color(Color::black);
+	instance->window->redraw();
+
+	// delete the HintFlash instance
+	delete instance;
+}
+
 void PancakeSorter::hint()
 {
 	vector<int>* solution = getSolution();
@@ -165,12 +201,14 @@ void PancakeSorter::hint()
 	// get a pointer to the hinted pancake ellipse
 	Ellipse* nextPancake = pancakes[nextFlipIndex];
 
-	// highlight the next best move in blue
-	nextPancake->set_fill_color(FL_DARK_BLUE);
-	redraw();
-	Fl::wait(500);
-	nextPancake->set_fill_color(getPancakeColor());
-	redraw();
+	// flash the next best move in neon green 3 times
+	for(int i = 0; i < 4; i++) {
+		HintFlash *start = new HintFlash(this, nextPancake);
+		HintFlash *end = new HintFlash(this, nextPancake);
+
+		Fl::add_timeout(0.5 + i, hintFlashStart, (void*)start);
+		Fl::add_timeout(1.0 + i, hintFlashEnd, (void*)end);
+	}
 }
 
 // returns an all-caps version of the entered player initials
