@@ -44,7 +44,11 @@ void PancakeSorter::loadScores()
 	{
 		in >> name >> score;
 		HiScore HS1(name, score);
-		scores.push_back(HS1);
+
+		if(name != "")
+		{
+			scores.push_back(HS1);
+		}
 	}
 
 	in.close();
