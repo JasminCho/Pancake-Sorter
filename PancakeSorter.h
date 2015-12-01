@@ -41,6 +41,7 @@ struct PancakeSorter: Simple_window
 	int moves = 0;
 
 	// Splash Screen
+	void picAttach();  //attaches main pictures and background
 	void startScreen(); //opens level screen
 	void startInstruct(); //opens instruction screen
 	void detachSplash(); //detatch splash w/o redraw
@@ -147,18 +148,18 @@ private:
 	Rectangle bgcolor{Point{0,0},1000,800};
 	Text gameTitle{Point{305,65},"The Flip-Flappening"};
 	Text teamNumber{Point{445,120},"Team H11"};
-	Text bl{Point{100,200},"Bofeng Li"};
-	Text jc{Point{440,200},"Jasmin Cho"};
-	Text jg{Point{730,200},"Jacob Goldsworthy"};
+	Text bl{Point{100,190},"Bofeng Li"};
+	Text jc{Point{440,190},"Jasmin Cho"};
+	Text jg{Point{730,190},"Jacob Goldsworthy"};
 	Image mainPancakePic{Point{180,200},"mainpic.jpg"};
 	Image sidePancakePic1{Point{5,550},"sidepan.jpg"};
 	Image sidePancakePic2{Point{800,550},"sidepanflip.jpg"};
-	Rectangle instruct{Point{350,715},98,30};
-	Text instructLabel{Point{350,730},"  How to Play"};
-	Button instructButton{Point{350,756},98,30,"  How to Play",cb_instruct};
-	Rectangle levelScreen{Point{530,715},98,30};
-	Text levelScreenLabel{Point{540,728},"   START"};
-	Button levelScreenButton{Point{530,756},98,30,"   START",cb_levelScreen};
+	Rectangle instruct{Point{360,715},98,30};
+	Text instructLabel{Point{360,732},"  How to Play"};
+	Button instructButton{Point{360,756},98,30,"  How to Play",cb_instruct};
+	Rectangle levelScreen{Point{540,715},98,30};
+	Text levelScreenLabel{Point{550,732},"   START"};
+	Button levelScreenButton{Point{540,756},98,30,"   START",cb_levelScreen};
 
 	//Instruction Screen
 	
@@ -182,11 +183,11 @@ private:
 	Text top5_3{Point{100,160},""};
 	Text top5_4{Point{100,180},""};
 	Text top5_5{Point{100,200},""};
-	Text scoreText{Point{500, 200}, ""};
-	Text movesText{Point{500, 150}, ""};
+	Text scoreText{Point{460, 200}, ""};
+	Text movesText{Point{470, 150}, ""};
 	// initials
 	In_box playerInitials{Point{500,250},100,50,"Input Player Initials: "};
-	Text playerText{Point{500,250},""};
+	Text playerText{Point{492,250},""};
 	Text levelText{Point{500,350},"Choose Level"};
 	Button start{Point{450,700},90,30,"START",cb_start};
 	Button two{Point{350,400},90,30,"Level 2",cb_two};
@@ -220,9 +221,7 @@ private:
 	Text hintText{Point{215,125},"Hint"};
 	Button exitButton{Point{300,100},90,30,"Quit",cb_exitGame};
 	Rectangle exitBox{Point{300,100},90,30};
-	Text exitText{Point{315,125},"Exit"};
+	Text exitText{Point{315,125},"Back"};
 	Button backButton{Point{100,100},90,30,"Back",cb_back};
-	Rectangle backBox{Point{100,100},90,30};
-	Text backText{Point{115,125},"Back"};
 };
 #endif

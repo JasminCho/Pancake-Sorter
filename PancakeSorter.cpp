@@ -7,14 +7,23 @@ PancakeSorter::PancakeSorter(Point xy, int w, int h, const string& title)
 	{
 		startScreen();
 	}
+void PancakeSorter::picAttach()
+{
+        //background
+        bgcolor.set_fill_color(fl_rgb_color(16,179,122));
+        attach(bgcolor);
+
+        //images
+        attach(mainPancakePic);
+        attach(sidePancakePic1);
+        attach(sidePancakePic2);
+
+}
 
 void PancakeSorter::startScreen()
 {
 	loadScores();
-	//background
-	bgcolor.set_fill_color(fl_rgb_color(16,179,122));
-	attach(bgcolor);
-
+	picAttach();
 	//Texts
 	gameTitle.set_font(Graph_lib::Font::screen_bold);
 	gameTitle.set_font_size(50);
@@ -42,10 +51,6 @@ void PancakeSorter::startScreen()
 	attach(levelScreenLabel);
 	attach(levelScreenButton);
 
-	//images
-	attach(mainPancakePic);
-	attach(sidePancakePic1);
-	attach(sidePancakePic2);
 }
 
 void PancakeSorter::showLevel()
@@ -321,32 +326,32 @@ void PancakeSorter::startGame()
 
 void PancakeSorter::setupGame()
 {
-	// reset moves to 0
+	//attach background
+	bgGameScreen.set_color(fl_rgb_color(255,255,255));
+        bgGameScreen.set_fill_color(fl_rgb_color(255,255,255));
+        attach(bgGameScreen);
+	//redundancy is used to make sure the text is over the background
+	detach(scoreText); detach(movesText);
+	attach(scoreText); attach(movesText);
+	detach(playerText); attach(playerText);
+        // reset moves to 0
 	setMoves(0);
-
-	attach(hintButton);
 
 	//add pancakes
 	addPancakeEllipses();
 	initializePancakePosition();
 	// shuffle the pancakes
 	shufflePancakes();
-	//attach background
-        bgGameScreen.set_color(fl_rgb_color(255,255,255));
-        bgGameScreen.set_fill_color(fl_rgb_color(255,255,255));
-	//attach(bgGameScreen);
 	// attach pancakes
 	attachPancakes();
 	attachFlipButtons();
 	outputInitials();
 	//attach hint, back, exit boxes, and background
+	attach(hintButton);
 	hintBox.set_fill_color(fl_rgb_color(255,215,0));
 	exitBox.set_fill_color(fl_rgb_color(255,215,0));
-	backBox.set_fill_color(fl_rgb_color(255,215,0));
 	attach(hintBox); attach(hintText);
 	attach(exitBox); attach(exitText);
-	attach(backBox); attach(backText);
-	
 	//calculate score
 	calcMinMoves();
 	calcScore();
@@ -361,10 +366,9 @@ void PancakeSorter::detachGameScreen()
 	pancakePos.clear();
 	detachFlipButtons();
 	detach(hintButton);
-	//detach(bgGameScreen);
+	detach(bgGameScreen);
 	detach(hintBox); detach(hintText);
 	detach(exitBox); detach(exitText);
-	detach(backBox); detach(backText);
 }
 
 void PancakeSorter::exitGame()

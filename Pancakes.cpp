@@ -6,7 +6,20 @@
 
 Color PancakeSorter::getPancakeColor()
 {
-	const Color PANCAKE_COLOR(fl_rgb_color(0xD6, 0xC9, 0x65));
+	//Random values for RGB of pancake color
+	//In order to make pancakes of different colors
+	vector<int> v;
+	for(int i=0;i<=255;++i)
+	{
+		v.push_back(i);
+	}
+	random_shuffle(v.begin(),v.end());
+	int r=v[0];
+	random_shuffle(v.begin(),v.end());
+	int g=v[0];
+	random_shuffle(v.begin(),v.end());
+	int b=v[0];
+	Color PANCAKE_COLOR(fl_rgb_color(r,g,b));
 	return PANCAKE_COLOR;
 }
 
