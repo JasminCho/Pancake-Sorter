@@ -175,7 +175,7 @@ private:
 	Text lineOne{Point{25,160}, "The goal of this game is to arrange a stack of different size pancakes"};
 	Text lineTwo{Point{25,205}, "from smallest on top to largest on bottom by repeatedly flipping"};
 	Text lineThree{Point{25,250}, "over a top partial stack of some number of pancakes, you can insert between any two pancakes."};
-	Text lineFour{Point{25,295}, "There will be a timer to show how much time is left for you to complete the game."};
+	Text lineFour{Point{25,295}, "You can click on the 'hint' button and it will tell you the next best move."};
 	Text lineFive{Point{25,340}, "The game is over when pancakes are sorted and top scores will be recorded."};
 	Text lineSix{Point{25,385}, "Your score is 0 if you do too many flips."};
 	Rectangle instToLevelRect{Point{450,700},90,30};
