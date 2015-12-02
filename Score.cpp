@@ -85,7 +85,7 @@ void PancakeSorter::calcMinMoves()
 {
 	vector<int>* solution = getSolution();
 	minMoves = num_moves(solution);
-	minMovesText.set_label("Can be done in " + to_string(minMoves) + "flips");
+	minMovesText.set_label("Can be done in " + to_string(minMoves) + " flips");
 }
 
 void PancakeSorter::calcScore()

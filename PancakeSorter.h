@@ -52,11 +52,14 @@ struct PancakeSorter: Simple_window
 	void startFromInstruct();//from instruction to level screen
 
 	// Level Chooser Screen
+	void attachLevelOverlay(); //attach graphical indicators
+	void attachLevelText(); 
 	void attachLevelButtons(); //attaches the buttons for level screen
 	void startGame(); //starts actual game
 	void showLevel(); //displays level on level screen
 	void setLevel(int numlvl); //sets the chosen level
-	void detachLevel(); //detaches all buttons on level screen
+	void detachLevelOverlay();
+	void detachLevel(); //detaches all buttons on level screen and graphical objects
 	void outputInitials(); //display player initials
 
 	// Pancake functions
@@ -193,26 +196,69 @@ private:
 	Text top5_5{Point{100,200},""};
 
 	// initials
-	In_box playerInitials{Point{500,250},100,50,"Input Player Initials: "};
-	Text levelText{Point{500,350},"Choose Level"};
-	Button start{Point{450,700},90,30,"START",cb_start};
-	Button two{Point{350,400},90,30,"Level 2",cb_two};
-	Button three{Point{460,400},90,30,"Level 3",cb_three};
-	Button four{Point{570,400},90,30,"Level 4",cb_four};
-	Button five{Point{680,400},90,30,"Level 5",cb_five};
-	Button six{Point{350,450},90,30,"Level 6",cb_six};
-	Button seven{Point{460,450},90,30,"Level 7",cb_seven};
-	Button eight{Point{570,450},90,30,"Level 8",cb_eight};
-	Button nine{Point{680,450},90,30,"Level 9",cb_nine};
+		//four Rectangle background
+	Rectangle bgLevel1{Point{0,0},1000,250};
+	Rectangle bgLevel2{Point{0,0},480,850};
+	Rectangle bgLevel3{Point{580,0},600,850};
+	Rectangle bgLevel4{Point{480,300},100,500};
+		//In box
+	In_box playerInitials{Point{480,250},100,50,"Input Player Initials: "};
+	Text initialsPrompt{Point{350,280},"Input Player Initials: "};
+	Text levelText{Point{450,350},"Choose Level"};
+		//start
+	Button start{Point{460,700},90,30,"START",cb_start};
+	Rectangle startR{Point{460,700},90,30};
+	Text startT{Point{487,717},"Start"};
+		//2
+	Button two{Point{295,400},90,30,"Level 2",cb_two};
+	Rectangle twoR{Point{295,400},90,30};
+	Text twoT{Point{317,417},"Level 2"};
+		//3
+	Button three{Point{405,400},90,30,"Level 3",cb_three};
+	Rectangle threeR{Point{405,400},90,30};
+	Text threeT{Point{427,417},"Level 3"};
+		//4
+	Button four{Point{515,400},90,30,"Level 4",cb_four};
+	Rectangle fourR{Point{515,400},90,30};
+	Text fourT{Point{537,417},"Level 4"};
+		//5
+	Button five{Point{625,400},90,30,"Level 5",cb_five};
+	Rectangle fiveR{Point{625,400},90,30};
+	Text fiveT{Point{647,417},"Level 5"};
+		//6
+	Button six{Point{295,450},90,30,"Level 6",cb_six};
+	Rectangle sixR{Point{295,450},90,30};
+	Text sixT{Point{317,467},"Level 6"};
+		//7
+	Button seven{Point{405,450},90,30,"Level 7",cb_seven};
+	Rectangle sevenR{Point{405,450},90,30};
+	Text sevenT{Point{427,467},"level 7"};
+		//8
+	Button eight{Point{515,450},90,30,"Level 8",cb_eight};
+	Rectangle eightR{Point{515,450},90,30};
+	Text eightT{Point{537,467},"Level 8"};
+		//9
+	Button nine{Point{625,450},90,30,"Level 9",cb_nine};
+	Rectangle nineR{Point{625,450},90,30};
+	Text nineT{Point{647,467},"Level 9"};
+		//10
 	Button ten{Point{350,500},90,30,"Level 10",cb_ten};
+	Rectangle tenR{Point{350,500},90,30};
+	Text tenT{Point{370,517},"Level 10"};
+		//11
 	Button eleven{Point{460,500},90,30,"Level 11",cb_eleven};
+	Rectangle elevenR{Point{460,500},90,30};
+	Text elevenT{Point{480,517},"Level 11"};
+		//12
 	Button twelve{Point{570,500},90,30,"Level 12",cb_twelve};
+	Rectangle twelveR{Point{570,500},90,30};
+	Text twelveT{Point{590,517},"Level 12"};
 
 	// Game Screen Objects
-	Text scoreText{Point{400, 210}, ""};
+	Text scoreText{Point{390, 210}, ""};
 	Text movesText{Point{430, 160}, ""};
-	Text minMovesText{Point{430, 110}, ""};
-	Text playerText{Point{440,60},""};
+	Text minMovesText{Point{330, 110}, ""};
+	Text playerText{Point{465,60},""};
 
 	Button hintButton{Point{20, 20}, 90, 30, "Hint", cb_hint};
 	Rectangle hintBox{Point{20,20},90,30};

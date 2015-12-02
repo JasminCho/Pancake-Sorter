@@ -56,7 +56,19 @@ void PancakeSorter::startScreen()
 void PancakeSorter::showLevel()
 {
 	detachSplash();
-	
+	bgLevel1.set_fill_color(fl_rgb_color(255,255,0));
+	bgLevel2.set_fill_color(fl_rgb_color(255,255,0));
+	bgLevel3.set_fill_color(fl_rgb_color(255,255,0));
+	bgLevel4.set_fill_color(fl_rgb_color(255,255,0));
+	bgLevel1.set_color(fl_rgb_color(255,255,0));
+	bgLevel2.set_color(fl_rgb_color(255,255,0));
+	bgLevel3.set_color(fl_rgb_color(255,255,0));
+	bgLevel4.set_color(fl_rgb_color(255,255,0));
+	attach(bgLevel1);
+	attach(bgLevel2);
+	attach(bgLevel3);
+	attach(bgLevel4);	
+
 	attachLevelButtons();
 	
 	attach(playerInitials);
@@ -76,6 +88,7 @@ void PancakeSorter::showLevel()
 
 void PancakeSorter::attachLevelButtons()
 {
+	attachLevelOverlay();
 	attach(start);
 	attach(two);
 	attach(three);
@@ -90,9 +103,81 @@ void PancakeSorter::attachLevelButtons()
 	attach(twelve);
 	attach(levelText);
 }
-
+void PancakeSorter::attachLevelOverlay()
+{
+	twoR.set_fill_color(fl_rgb_color(50,205,50));
+	threeR.set_fill_color(fl_rgb_color(50,205,50));
+	fourR.set_fill_color(fl_rgb_color(50,205,50));
+	fiveR.set_fill_color(fl_rgb_color(50,205,50));
+	sixR.set_fill_color(fl_rgb_color(50,205,50));
+	sevenR.set_fill_color(fl_rgb_color(50,205,50));
+	eightR.set_fill_color(fl_rgb_color(50,205,50));
+	nineR.set_fill_color(fl_rgb_color(50,205,50));
+	tenR.set_fill_color(fl_rgb_color(50,205,50));
+	elevenR.set_fill_color(fl_rgb_color(50,205,50));
+	twelveR.set_fill_color(fl_rgb_color(50,205,50));
+	startR.set_fill_color(fl_rgb_color(50,205,50));
+	attach(twoR);
+	attach(threeR);
+        attach(fourR);
+        attach(fiveR);
+        attach(sixR);
+        attach(sevenR);
+        attach(eightR);
+        attach(nineR);
+        attach(tenR);
+	attach(elevenR);
+        attach(twelveR);
+	attach(startR);
+	attachLevelText();
+}
+void PancakeSorter::attachLevelText()
+{
+        attach(initialsPrompt);
+	attach(twoT);
+        attach(threeT);
+        attach(fourT);
+        attach(fiveT);
+        attach(sixT);
+        attach(sevenT);
+        attach(eightT);
+        attach(nineT);
+        attach(tenT);
+        attach(elevenT);
+        attach(twelveT);
+	attach(startT);
+}
+void PancakeSorter::detachLevelOverlay()
+{
+	detach(twoR);
+        detach(threeR);
+        detach(fourR);
+        detach(fiveR);
+        detach(sixR);
+        detach(sevenR);
+        detach(eightR);
+        detach(nineR);
+        detach(tenR);
+        detach(elevenR);
+        detach(twelveR);
+	detach(twoT);
+        detach(threeT);
+        detach(fourT);
+        detach(fiveT);
+        detach(sixT);
+        detach(sevenT);
+        detach(eightT);
+        detach(nineT);
+        detach(tenT);
+        detach(elevenT);
+        detach(twelveT);
+	detach(startR);
+	detach(startT);
+	detach(initialsPrompt);
+}
 void PancakeSorter::detachLevel()
 {
+	detachLevelOverlay();
 	detach(start);
 	detach(two);
 	detach(three);
@@ -117,6 +202,10 @@ void PancakeSorter::detachLevel()
 	detach(top5_3);
 	detach(top5_4);
 	detach(top5_5);
+	detach(bgLevel1);
+	detach(bgLevel2);
+	detach(bgLevel3);
+	detach(bgLevel4);
 }
 
 void PancakeSorter::attachFlipButtons()
