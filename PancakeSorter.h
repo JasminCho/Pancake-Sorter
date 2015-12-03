@@ -42,25 +42,33 @@ struct PancakeSorter: Simple_window
 
 	// Splash Screen
 	void picAttach();  //attaches main pictures and background
-	void startScreen(); //opens level screen
-	void startInstruct(); //opens instruction screen
+	void attachSplash(); //attaches splash screen
+	void setSplashScreen(); //sets visuals
 	void detachSplash(); //detatch splash w/o redraw
+	void startFromSplash();
 
 	// Instruction Screen
-	void back(); //back to splash screen from instruction screen
+	void attachInstruct(); //opens instruction screen
+	void setInstruct();
 	void detachInstruct();//detaches instruction
 	void startFromInstruct();//from instruction to level screen
 
-	// Level Chooser Screen
-	void attachLevelOverlay(); //attach graphical indicators
-	void attachLevelText(); 
+	// Level Screen
+	void attachLevelScreen(); //displays level on level screen
+	void detachLevelScreen(); //detaches all buttons on level screen and graphical objects
 	void attachLevelButtons(); //attaches the buttons for level screen
-	void startGame(); //starts actual game
-	void showLevel(); //displays level on level screen
-	void setLevel(int numlvl); //sets the chosen level
+	void detachLevelButtons();
+	void attachLevelBackground();
+	void setLevelBackground();
+	void detachLevelBackground();
+	void attachLevelOverlay(); //attach graphical indicators
+	void setLevelOverlay();
 	void detachLevelOverlay();
-	void detachLevel(); //detaches all buttons on level screen and graphical objects
+	void attachLevelText(); 
+	void setLevelText();
+	void detachLevelText();
 	void outputInitials(); //display player initials
+	void setLevel(int numlvl); //sets the chosen level
 
 	// Pancake functions
 	int getNumPancakes(); //gets number of pancakes for certain level chosen
@@ -80,7 +88,10 @@ struct PancakeSorter: Simple_window
 	// Game Screen
 	bool checkErrors();
 	bool checkInitials();
+	void startGame(); //attaches game screen when start is clicked
 	void setupGame();
+	void attachGameGraphics();
+	void setGameGraphics();
 	void exitGame(); //to exit game screen
 	void calcScore(); //calculates player's final score
 	void loadScores();
@@ -112,13 +123,19 @@ struct PancakeSorter: Simple_window
 	void setPlayerScore(int newScore);
 	int playerScore;
 
+	// Timer
+	bool timerEnabled;
+	int timeLeft;
+	void setupTimer();
+	void stopTimer();
+	void decreaseTimer();
+	static void cb_timer(Address window);
 
 	// Callbacks for Start Screen
 	static void cb_instruct(Address, Address window);
 	static void cb_levelScreen(Address, Address window);
 
 	// Callbacks for Instruction Screen
-	static void cb_back(Address, Address window);
 	static void cb_instructToLevel(Address, Address window);
 
 	// callbacks for level screen
@@ -150,7 +167,6 @@ struct PancakeSorter: Simple_window
 	static void cb_flip10(Address, Address window);
 	static void cb_flip11(Address, Address window);
 
-
 private:
 
 	//Splash Screen
@@ -164,11 +180,11 @@ private:
 	Image sidePancakePic1{Point{5,550},"sidepan.jpg"};
 	Image sidePancakePic2{Point{800,550},"sidepanflip.jpg"};
 	
-	Rectangle instruct{Point{360,715},98,30};
+	Rectangle instructRect{Point{360,715},98,30};
 	Button instructButton{Point{360,715},98,30,"  How to Play",cb_instruct};
 	Text instructLabel{Point{360,732},"  How to Play"};
 	
-	Rectangle levelScreen{Point{540,715},98,30};
+	Rectangle levelScreenRect{Point{540,715},98,30};
 	Button levelScreenButton{Point{540,715},98,30,"   START",cb_levelScreen};
 	Text levelScreenLabel{Point{550,732},"   START"};
 
@@ -183,102 +199,101 @@ private:
 	Text lineSix{Point{25,385}, "Your score is 0 if you do too many flips."};
 	Rectangle instToLevelRect{Point{450,700},90,30};
 	Text instToLevelLabel{Point{453,715},"    START"};
-	Button instructToLevel{Point{450,700},90,30,"START",cb_instructToLevel};
-
+	Button instToLevelButton{Point{450,700},90,30,"START",cb_instructToLevel};
 
 	// Level Screen Objects
 	// hiscores
 	Text top5{Point{100,100},"Top 5 Hi-Scores"};
-	Text top5_1{Point{100,120},""};
-	Text top5_2{Point{100,140},""};
-	Text top5_3{Point{100,160},""};
-	Text top5_4{Point{100,180},""};
-	Text top5_5{Point{100,200},""};
+	Text top5_1{Point{130,120},""};
+	Text top5_2{Point{130,140},""};
+	Text top5_3{Point{130,160},""};
+	Text top5_4{Point{130,180},""};
+	Text top5_5{Point{130,200},""};
 
 	// initials
 		//four Rectangle background
 	Rectangle bgLevel1{Point{0,0},1000,250};
-	Rectangle bgLevel2{Point{0,0},480,850};
-	Rectangle bgLevel3{Point{580,0},600,850};
-	Rectangle bgLevel4{Point{480,300},100,500};
+	Rectangle bgLevel2{Point{0,0},460,850};
+	Rectangle bgLevel3{Point{550,0},580,850};
+	Rectangle bgLevel4{Point{450,300},100,500};
 		//In box
-	In_box playerInitials{Point{480,250},100,50,"Input Player Initials: "};
-	Text initialsPrompt{Point{350,280},"Input Player Initials: "};
+	In_box playerInitials{Point{460,250},90,50,""};
+	Text initialsPrompt{Point{435,230},"Input Player Initials"};
 	Text levelText{Point{450,350},"Choose Level"};
 		//start
 	Button start{Point{460,700},90,30,"START",cb_start};
-	Rectangle startR{Point{460,700},90,30};
-	Text startT{Point{487,717},"Start"};
+	Rectangle startRect{Point{460,700},90,30};
+	Text startText{Point{487,717},"Start"};
 		//2
 	Button two{Point{295,400},90,30,"Level 2",cb_two};
-	Rectangle twoR{Point{295,400},90,30};
-	Text twoT{Point{317,417},"Level 2"};
+	Rectangle twoRect{Point{295,400},90,30};
+	Text twoText{Point{317,417},"Level 2"};
 		//3
 	Button three{Point{405,400},90,30,"Level 3",cb_three};
-	Rectangle threeR{Point{405,400},90,30};
-	Text threeT{Point{427,417},"Level 3"};
+	Rectangle threeRect{Point{405,400},90,30};
+	Text threeText{Point{427,417},"Level 3"};
 		//4
 	Button four{Point{515,400},90,30,"Level 4",cb_four};
-	Rectangle fourR{Point{515,400},90,30};
-	Text fourT{Point{537,417},"Level 4"};
+	Rectangle fourRect{Point{515,400},90,30};
+	Text fourText{Point{537,417},"Level 4"};
 		//5
 	Button five{Point{625,400},90,30,"Level 5",cb_five};
-	Rectangle fiveR{Point{625,400},90,30};
-	Text fiveT{Point{647,417},"Level 5"};
+	Rectangle fiveRect{Point{625,400},90,30};
+	Text fiveText{Point{647,417},"Level 5"};
 		//6
 	Button six{Point{295,450},90,30,"Level 6",cb_six};
-	Rectangle sixR{Point{295,450},90,30};
-	Text sixT{Point{317,467},"Level 6"};
+	Rectangle sixRect{Point{295,450},90,30};
+	Text sixText{Point{317,467},"Level 6"};
 		//7
 	Button seven{Point{405,450},90,30,"Level 7",cb_seven};
-	Rectangle sevenR{Point{405,450},90,30};
-	Text sevenT{Point{427,467},"level 7"};
+	Rectangle sevenRect{Point{405,450},90,30};
+	Text sevenText{Point{427,467},"level 7"};
 		//8
 	Button eight{Point{515,450},90,30,"Level 8",cb_eight};
-	Rectangle eightR{Point{515,450},90,30};
-	Text eightT{Point{537,467},"Level 8"};
+	Rectangle eightRect{Point{515,450},90,30};
+	Text eightText{Point{537,467},"Level 8"};
 		//9
 	Button nine{Point{625,450},90,30,"Level 9",cb_nine};
-	Rectangle nineR{Point{625,450},90,30};
-	Text nineT{Point{647,467},"Level 9"};
+	Rectangle nineRect{Point{625,450},90,30};
+	Text nineText{Point{647,467},"Level 9"};
 		//10
 	Button ten{Point{350,500},90,30,"Level 10",cb_ten};
-	Rectangle tenR{Point{350,500},90,30};
-	Text tenT{Point{370,517},"Level 10"};
+	Rectangle tenRect{Point{350,500},90,30};
+	Text tenText{Point{370,517},"Level 10"};
 		//11
 	Button eleven{Point{460,500},90,30,"Level 11",cb_eleven};
-	Rectangle elevenR{Point{460,500},90,30};
-	Text elevenT{Point{480,517},"Level 11"};
+	Rectangle elevenRect{Point{460,500},90,30};
+	Text elevenText{Point{480,517},"Level 11"};
 		//12
 	Button twelve{Point{570,500},90,30,"Level 12",cb_twelve};
-	Rectangle twelveR{Point{570,500},90,30};
-	Text twelveT{Point{590,517},"Level 12"};
+	Rectangle twelveRect{Point{570,500},90,30};
+	Text twelveText{Point{590,517},"Level 12"};
 
 	// Game Screen Objects
+	Text timerText{Point{850,60},""};
 	Text scoreText{Point{390, 210}, ""};
 	Text movesText{Point{430, 160}, ""};
 	Text minMovesText{Point{330, 110}, ""};
 	Text playerText{Point{465,60},""};
 
 	Button hintButton{Point{20, 20}, 90, 30, "Hint", cb_hint};
-	Rectangle hintBox{Point{20,20},90,30};
+	Rectangle hintRect{Point{20,20},90,30};
 	Text hintText{Point{45,43},"Hint"};
 	Button exitButton{Point{120,20},90,30,"Back",cb_exitGame};
-	Rectangle exitBox{Point{120,20},90,30};
+	Rectangle exitRect{Point{120,20},90,30};
 	Text exitText{Point{140,43},"Back"};
 	
-
 	Rectangle bgGameScreen{Point{0,0},1000,800};
-	Button p2{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 11", cb_flip11};
-	Button p3{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(1 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 10", cb_flip10};
-	Button p4{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(2 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 9", cb_flip9};
-	Button p5{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(3 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 8", cb_flip8};
-	Button p6{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(4 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 7", cb_flip7};
-	Button p7{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(5 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 6", cb_flip6};
-	Button p8{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(6 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 5", cb_flip5};
-	Button p9{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(7 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 4", cb_flip4};
-	Button p10{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(8 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 3", cb_flip3};
-	Button p11{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(9 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 2", cb_flip2};
-	Button p12{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(10 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "position 1", cb_flip1};
+	Button p2{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "", cb_flip11};
+	Button p3{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(1 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "", cb_flip10};
+	Button p4{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(2 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "", cb_flip9};
+	Button p5{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(3 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "", cb_flip8};
+	Button p6{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(4 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "", cb_flip7};
+	Button p7{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(5 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "", cb_flip6};
+	Button p8{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(6 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "", cb_flip5};
+	Button p9{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(7 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "", cb_flip4};
+	Button p10{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(8 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "", cb_flip3};
+	Button p11{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(9 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "", cb_flip2};
+	Button p12{Point{ FLIP_BUTTON_X, FLIP_BUTTON_Y+(10 * Y_DISTANCE * -1)}, WIDTH_MAX, PANCAKE_HEIGHT * 2, "", cb_flip1};
 };
 #endif

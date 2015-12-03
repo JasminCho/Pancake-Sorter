@@ -1,23 +1,33 @@
-//Buttons.cpp
 #include "PancakeSorter.h"
 
-//Call backs setting the level for the pancake numbers
 void PancakeSorter::cb_instruct(Address, Address window)
 {
-	reference_to<PancakeSorter>(window).startInstruct();
+	reference_to<PancakeSorter>(window).attachInstruct();
 }
+
 void PancakeSorter::cb_instructToLevel(Address, Address window)
 {
 	reference_to<PancakeSorter>(window).startFromInstruct();
 }
+
 void PancakeSorter::cb_levelScreen(Address, Address window)
 {
-	reference_to<PancakeSorter>(window).showLevel();
+	reference_to<PancakeSorter>(window).startFromSplash();
+}
+
+void PancakeSorter::cb_hint(Address, Address window)
+{
+	reference_to<PancakeSorter>(window).hint();
 }
 
 void PancakeSorter::cb_start(Address, Address window)
 {
 	reference_to<PancakeSorter>(window).startGame();
+}
+
+void PancakeSorter::cb_exitGame(Address, Address window)
+{
+	reference_to<PancakeSorter>(window).exitGame();
 }
 
 void PancakeSorter::cb_two(Address, Address window)
@@ -73,16 +83,6 @@ void PancakeSorter::cb_eleven(Address, Address window)
 void PancakeSorter::cb_twelve(Address, Address window)
 {
 	reference_to<PancakeSorter>(window).setLevel(12);
-}
-
-void PancakeSorter::cb_exitGame(Address, Address window)
-{
-	reference_to<PancakeSorter>(window).exitGame();
-}
-
-void PancakeSorter::cb_back(Address, Address window)
-{
-	reference_to<PancakeSorter>(window).back();
 }
 
 void PancakeSorter::cb_flip11(Address, Address window)
@@ -149,9 +149,4 @@ void PancakeSorter::cb_flip1(Address, Address window)
 {
 	PancakeSorter &win = reference_to<PancakeSorter>(window);
 	win.flipPancake(win.getNumPancakes() - 10);
-}
-
-void PancakeSorter::cb_hint(Address, Address window)
-{
-	reference_to<PancakeSorter>(window).hint();
 }

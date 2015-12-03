@@ -3,11 +3,6 @@
 #include "find_solution.h"
 #include "PancakeSorter.h"
 
-void PancakeSorter::outputInitials()
-{
-	string player = getPlayerInitials();
-}
-
 void PancakeSorter::newHiScore()
 {
 	HiScore myScore(getPlayerInitials(), playerScore);
@@ -112,10 +107,12 @@ void PancakeSorter::calcWinLose()
 	{
 		attachEndScreen();
 		gameLose();
+		redraw();
 	}
 	else if(movesLeft == 0)
 	{
 		attachEndScreen();
 		gameWin();
+		redraw();
 	}
 }
